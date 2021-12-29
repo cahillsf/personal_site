@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import HomePage from '@/pages/HomePage'
 import ToothPage from '@/pages/ToothPage'
 import CreateAccount from '@/components/CreateAccount'
+import ThreeScene from '@/pages/ThreeScene'
 
 Vue.use(Router)
 
@@ -22,6 +23,11 @@ export default new Router({
       path: '/createaccount',
       name: 'CreateAccount',
       component: CreateAccount
+    },
+    {
+      path: '/threescene',
+      name: 'ThreeScene',
+      component: ThreeScene
     }
   ]
 })
