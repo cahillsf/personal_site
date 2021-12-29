@@ -1,5 +1,6 @@
 <template>
  <div class="singleColGrid">
+    <router-methods ref="routerMethods"></router-methods>
     <top-toolbar></top-toolbar>
     <h1>Three.js Example</h1>
     <p>This is a page I put together while exploring the three.js library.  
@@ -7,7 +8,7 @@
         Just click the front tooth to add another row of teeth to this floating phalanx!  </p>
     <div class="bigtoothdiv">
       <div id="imgdiv">
-          <a href="project" id="bigtootha" target="_blank">
+          <a @click="$refs.routerMethods.navigateToPage('/threescene')" id="bigtootha" target="_blank">
               <img src="@/assets/texttooth.png" id="bigtooth" alt="big tooth"/>
           </a>
       </div>
@@ -20,13 +21,15 @@
 </template>
 
 <script>
+import RouterMethods from '../components/RouterMethods.vue';
 import TopToolbar from '../components/TopToolbar.vue';
 import BottomBar from '../components/BottomBar.vue';
 export default {
   name: 'ToothPage',
   components: {
     TopToolbar,
-    BottomBar
+    BottomBar,
+    RouterMethods
   },
   data () {
     return {
