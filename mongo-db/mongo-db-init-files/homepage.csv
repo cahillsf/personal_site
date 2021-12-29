@@ -1,5 +1,6 @@
-﻿_id,title,msg,animation
-0,"Revolutionary Technology","Meeting you where you need us most",fade-up
-1,CardTwo,testTwo,fade-up
-2,CardThree,testThree,fade-up
-3,CardFour,testFour,fade-up
+﻿_id,title,msg,animation,imgPath,route
+0,"JavaScript Fun with Three.js Library","Meeting you where you need us most",fade-up,tooth.png,"/toothpage"
+1,"HTML Canvas on Mobile","HTML Canvas and javascript with mobile hardware",fade-up,riley_sm.png
+2,"Decision trees with scikit-learn in Jupyter notebooks",testThree,fade-up,dec_tree.png
+3,"Graph algorithms with networkx in Jupyter notebooks",testFour,fade-up,network-img.png
+4,"C++ Predator Prey Simulation",testFive,fade-up,doodle_icon.png
