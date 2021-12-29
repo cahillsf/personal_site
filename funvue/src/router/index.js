@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-import AnotherPage from '@/components/AnotherPage'
+import HomePage from '@/pages/HomePage'
+import ToothPage from '@/pages/ToothPage'
 import CreateAccount from '@/components/CreateAccount'
 
 Vue.use(Router)
@@ -10,13 +10,13 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      name: 'HomePage',
+      component: HomePage
     },
     {
-      path: '/nextpage',
-      name: 'AnotherPage',
-      component: AnotherPage
+      path: '/toothpage',
+      name: 'ToothPage',
+      component: ToothPage
     },
     {
       path: '/createaccount',
