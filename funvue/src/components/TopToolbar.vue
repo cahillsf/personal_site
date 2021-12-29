@@ -1,13 +1,21 @@
 <template>
-    <div class="toolbar" role="banner">
-        <span id="welcome">{{ msg }}</span>
+    <div class="toolbar" role="banner"> 
+        <div id="logo-name">
+          <img id="logo" src="@/assets/initials.png"/>
+          <ul>
+							<li>Stephen Cahill</li>
+							<li>Developer</li>
+          </ul>
+        </div>
         <div class="spacer"></div>
 
         <div id="button-wrapper" class="menu-button-in" v-bind:class="{ 'menu-button-invisible':  smallScreenOnLoad, 'menu-button-out':buttonAnimate }">
-          <vk-button size="small" class="menu-button" type="primary">500</vk-button>
-          <vk-button size="small" class="menu-button" type="primary">400</vk-button>
-          <vk-button size="small" class="menu-button" type="primary" @click="$refs.childModal.showModal()">Login</vk-button>
-          <vk-button size="small" class="menu-button" type="primary" @click="goToCreateAccount">Create Account</vk-button>
+          <!-- TO DO: add in routing once I have additional pages -->
+          <vk-button size="small" class="menu-button" v-bind:class="{ 'selected':  page.selected }" type="primary" v-for="page in pages" v-bind:key="page.id">
+            {{ page.title }}
+          </vk-button>
+          <!-- <vk-button size="small" class="menu-button" type="primary" @click="$refs.childModal.showModal()">Login</vk-button> -->
+          <!-- <vk-button size="small" class="menu-button" type="primary" @click="goToCreateAccount">Create Account</vk-button> -->
         </div>
         <login-modal ref="childModal"></login-modal>
       
@@ -15,10 +23,8 @@
           <img @click="showDropdown" ref="sandwichIcon" id="menu-icon2" src="../assets/icons8-menu.svg"/>
           <vk-drop animation="slide-top-small" position="top-right" mode="click" ref="dropMenu">
             <vk-navbar-nav-dropdown-nav align="right" navbar-aligned="true" id="nav-dropdown">
-              <vk-nav-item title="500"></vk-nav-item>
-              <vk-nav-item title="400"></vk-nav-item>
-              <vk-nav-item title="Login"></vk-nav-item>
-              <vk-nav-item title="Create Account"></vk-nav-item>
+              <!-- TO DO: add in routing once I have additional pages -->
+              <vk-nav-item v-for="page in pages" v-bind:key="page.id" :title="page.title"></vk-nav-item>
             </vk-navbar-nav-dropdown-nav>
           </vk-drop>
         </div>
@@ -56,9 +62,32 @@ export default {
       firstTime: true,
       iconAnimate: null,
       buttonAnimate: null,
+      pages: [
+        {
+          '_id': 0,
+          'title': 'Home',
+          'path':'/',
+        },
+        {
+          '_id': 1,
+          'title': 'About Me',
+          'path':'/'
+        },
+        {
+          '_id': 2,
+          'title': 'CV',
+          'path':'/'
+        },
+        {
+          '_id': 3,
+          'title': 'Contact Me',
+          'path':'/'
+        },
+      ]
     }
   },
   mounted(){
+
     if(window.innerWidth > 650){
       this.largeScreenOnLoad = true;
       console.log("large screen is " + this.largeScreenOnLoad)
@@ -69,12 +98,25 @@ export default {
   },
   created(){
     window.addEventListener("resize", this.trackResize);
+    this.setCurPageClass();
   },
   destroyed(){
     window.removeEventListener("resize", this.trackResize);
 
   },
   methods: {
+    setCurPageClass() {
+      let pageKeys = Object.keys(this.pages);
+      pageKeys.forEach(key => {
+        let curPage = Object.values(this.pages).find(el => el._id === parseInt(key));
+        let jsonCurPage = JSON.parse(JSON.stringify(curPage));
+        console.log(jsonCurPage.path);
+        if (this.$router.currentRoute.path == jsonCurPage.path){
+          console.log("match found!");
+          curPage['selected'] = true;
+        }
+      })
+    },
     doSomething() {
       this.msg= 'TopToolbar!;'
     },
@@ -113,9 +155,31 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-#welcome{
-  margin-left: 3%;
+#logo-name {
+  margin-left: 10px;
   font-size: 18px;
+  display: grid;
+}
+#logo-name * {
+  grid-row: 1;
+}
+
+#logo-name ul {
+  list-style-type: none;
+  padding-left: 5px;
+}
+
+#logo-name li{
+	text-align: left;
+	margin: 0;
+	padding: 0;
+}
+
+#logo {
+  width: 50px;
+	height: 50px;
+	position: relative;
+  top: 21px;
 }
 
 #menu-icon2{
@@ -134,6 +198,11 @@ export default {
   position: relative;
   margin-right: 2%;
 }
+
+.selected {
+  background-color: #486988;
+  color: #fff;
+}
 .spacer {
   flex: 1;
 }
@@ -145,14 +214,14 @@ export default {
 
 .toolbar {
   position: absolute;
-  top: 0;
+  top: -60px;
   left: 0;
   right: 0;
   height: 60px;
   display: flex;
   align-items: center;
   justify-content: space-around;
-  background-image: linear-gradient(#1a46a5, #289128);
+  background-image: linear-gradient(to top, #c4d4e0 0%,#6e9db3 100%);
   color: white;
   font-weight: 600;
 }
@@ -165,8 +234,12 @@ export default {
 
 .icon-div-invisible{
   display: grid;
-  position: absolute;
+  /* position: absolute; */
   right: -10vw;
+  /* width: 0; */
+  position: relative;
+  left: -700vw;
+  opacity: 0;
   width: 0;
 }
 
