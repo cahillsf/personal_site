@@ -54,7 +54,7 @@ export default {
         //loop through the provided cards adding the proper css to display
         //cards on alternate sides of the webpage with corresponding animation
         keys.forEach(key => {  
-          let i = parseInt(key) + 2;
+          let i = parseInt(key) + 3;
           //define the the style properties object
           let curProps = {
             gridColumn: 0,
@@ -62,20 +62,20 @@ export default {
             cursor: 'pointer'
           }
           let curCard = Object.values(this.mainCards).find(el => el._id === parseInt(key));
-          console.log(curCard);
+          // console.log(curCard);
           //grid row will correspond the index of the loop
           //as cards are displayed straight down the page
           curProps['gridRow'] = i;
           //column alternates page sides
           //even numbers on the right odd numbers on the left
-          curProps['gridColumn'] = (i % 2 != 0)? 2 : 1;
+          curProps['gridColumn'] = (i % 2 == 0)? 2 : 1;
           //assign grid props to card object
           curCard['style'] = curProps;
           //add complete card to cards array
           this.cards.push(curCard);
-          console.log(curCard);
+          // console.log(curCard);
         })
-        console.log(this.cards);
+        // console.log(this.cards);
       },
       getCards() {
         const path = 'http://localhost:8000/cards';
@@ -89,6 +89,7 @@ export default {
             console.error(error);
           });
       },
+      // TODO: dynamically assign grid row to footer
       showBottomBar() {
         this.bottomBarProps['display'] = 'grid';
         console.log("show bottom")
@@ -114,7 +115,7 @@ export default {
 
 #home-header {
   font-weight: normal;
-  grid-row: 1;
+  grid-row: 2;
   grid-column: 1 / 3;
 }
 ul {
