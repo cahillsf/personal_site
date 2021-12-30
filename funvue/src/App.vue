@@ -39,7 +39,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 0px;
   position: relative;
 }
 
@@ -54,7 +54,6 @@ export default {
   position: relative;
   display: grid;
   grid-template-columns: 1fr;
-  row-gap: 10%;
-  /* height: calc(100vh - 10%); */
+  row-gap: 60px;
 }
 </style>
