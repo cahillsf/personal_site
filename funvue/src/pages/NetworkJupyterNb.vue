@@ -29,8 +29,16 @@ export default {
       console.log(window.innerHeight)
       this.pageHeight = window.innerHeight - 17;
       this.pageWidth = window.innerWidth - 17;
+      window.addEventListener("resize", this.resizeIframe);
+  },
+  destroyed(){
+    window.removeEventListener("resize", this.resizeIframe);
   },
   methods: {
+    resizeIframe(){
+        this.pageHeight = window.innerHeight - 17;
+        this.pageWidth = window.innerWidth - 17;
+      }
   },
 };
 </script>

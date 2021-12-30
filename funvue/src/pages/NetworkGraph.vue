@@ -1,11 +1,13 @@
 <template>
  <div class="singleColGrid">
     <top-toolbar></top-toolbar>
-    <h1 class="header">Graph Algorithms with NetworkX</h1>
-    <p class="paragraph">
-        This was a project covering graph theory and graph algorithms.  I created a undirected weighted graph of 29 nodes in a csv file, then imported the csv into a networkx graph and produced a visualization using matplotlib.  I then implemented various algorithms including depth first search traversal, breadth first search traversal, Kruskal's minimum spanning tree algorithm, and more.  Check out the Jupyter notebook (as a webpage) <a @click="navigateToPage('/networkjupyternb')"><span>here</span></a>. 
+    <div class="header">
+      <h1>Graph Algorithms with NetworkX</h1>
+      <p>
+          This was a project covering graph theory and graph algorithms.  I created a undirected weighted graph of 29 nodes in a csv file, then imported the csv into a networkx graph and produced a visualization using matplotlib.  I then implemented various algorithms including depth first search traversal, breadth first search traversal, Kruskal's minimum spanning tree algorithm, and more.  Check out the Jupyter notebook (as a webpage) <a @click="navigateToPage('/networkjupyternb')"><span>here</span></a>. 
 
-    </p>
+      </p>
+    </div>
     <div id="networkdiv">
         <div id="networkimgdiv">
             <img id="networkimg" src="@/assets/network_assets/network_pic.png" alt="network pic" />
@@ -33,7 +35,7 @@ export default {
         'grid-column': '1',
         'background-image': 'linear-gradient(to top, #c4d4e0 0%,#6e9db3 100%)',
         'display': 'grid',
-        'grid-row': 5,
+        'grid-row': 4,
       },
     }
   },
@@ -59,12 +61,10 @@ export default {
   grid-row: 2;
 }
 
-.paragraph {
-  grid-row: 3;
-}
+
 
 #networkdiv{
-    grid-row: 4;
+  grid-row: 3;
 	display:grid;
 	grid-template-columns: 20% 60% 20%;
 }

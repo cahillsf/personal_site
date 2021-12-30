@@ -1,10 +1,12 @@
 <template>
  <div class="singleColGrid">
     <top-toolbar></top-toolbar>
-    <h1 class="header">Algorithmic Analysis with Decision Trees</h1>
-    <p class="paragraph">
-        This is a really fun project I completed for an algorithms class as an introduction to using decision tree classifiers to perform algorithmic analysis.  The <span><a href="https://archive.ics.uci.edu/ml/datasets/census+income" target="_blank">data set</a></span>  is composed of almost 50,000 entries from the 1994 census with 15 columns of attributes from the UC Irvine Machine Learning Repository   Firstly, I used pandas to import the data sets for basic preliminary explanatory data analysis and matplotlib to visualize aspects of this analysis.<br/><br/>  I then imported the scikit-learn module and used its processing functionality to encode any string values as numeric values.  Now that the data was formatted properly, I fit two classifiers with the training data set using different splitting criterion (Gini index and information gain) to predict the income attribute and plot them using graphviz and IPython. Finally, I used scikit-learn's estimator to calculate the accuracy of each calssifier on the test data set.  Check out the Jupyter notebook (as a webpage) <a @click="navigateToPage('/jupyternb')"><span>here</span></a>.
-    </p>
+    <div class="header">
+      <h1>Algorithmic Analysis with Decision Trees</h1>
+      <p>
+          This is a really fun project I completed for an algorithms class as an introduction to using decision tree classifiers to perform algorithmic analysis.  The <span><a href="https://archive.ics.uci.edu/ml/datasets/census+income" target="_blank">data set</a></span>  is composed of almost 50,000 entries from the 1994 census with 15 columns of attributes from the UC Irvine Machine Learning Repository   Firstly, I used pandas to import the data sets for basic preliminary explanatory data analysis and matplotlib to visualize aspects of this analysis.<br/><br/>  I then imported the scikit-learn module and used its processing functionality to encode any string values as numeric values.  Now that the data was formatted properly, I fit two classifiers with the training data set using different splitting criterion (Gini index and information gain) to predict the income attribute and plot them using graphviz and IPython. Finally, I used scikit-learn's estimator to calculate the accuracy of each calssifier on the test data set.  Check out the Jupyter notebook (as a webpage) <a @click="navigateToPage('/jupyternb')"><span>here</span></a>.
+      </p>
+    </div>
     <div class="display one">
 			<h2>Using Entropy Splitting Criterion</h2>
 			<div id="imgdiv1">
@@ -39,14 +41,11 @@ export default {
         'grid-column': '1',
         'background-image': 'linear-gradient(to top, #c4d4e0 0%,#6e9db3 100%)',
         'display': 'grid',
-        'grid-row': 6,
+        'grid-row': 5,
       },
     }
   },
   methods: {
-    doSomething() {
-      this.msg= 'another page hahahahahahahaha!';
-    },
   },
 };
 </script>
@@ -65,10 +64,6 @@ export default {
   grid-row: 2;
 }
 
-.paragraph {
-  grid-row: 3;
-}
-
 .display{
 	justify-self: center;
 	position: relative;
@@ -76,10 +71,10 @@ export default {
 }
 
 .one {
-    grid-row: 4;
+    grid-row: 3;
 }
 
 .two {
-    grid-row: 5;
+    grid-row: 4;
 }
 </style>

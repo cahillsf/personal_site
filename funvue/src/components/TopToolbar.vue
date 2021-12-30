@@ -102,7 +102,6 @@ export default {
   },
   destroyed(){
     window.removeEventListener("resize", this.trackResize);
-
   },
   methods: {
     setCurPageClass() {
