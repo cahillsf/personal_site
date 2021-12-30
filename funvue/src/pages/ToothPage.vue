@@ -1,39 +1,41 @@
 <template>
  <div class="singleColGrid">
-    <router-methods ref="routerMethods"></router-methods>
     <top-toolbar></top-toolbar>
-    <h1>Three.js Example</h1>
-    <p>This is a page I put together while exploring the three.js library.  
+    <h1 class="header">Three.js Example</h1>
+    <p class ="paragraph">This is a page I put together while exploring the three.js library.  
         I modeled the tooth using Meshmixer, a very cool free 3-D modeling software, then loaded it as a object into my Three scene.  
         Just click the front tooth to add another row of teeth to this floating phalanx!  </p>
     <div class="bigtoothdiv">
       <div id="imgdiv">
-          <a @click="$refs.routerMethods.navigateToPage('/threescene')" id="bigtootha" target="_blank">
+          <a @click="navigateToPage('/threescene')" id="bigtootha" target="_blank">
               <img src="@/assets/texttooth.png" id="bigtooth" alt="big tooth"/>
           </a>
       </div>
     </div>
-    <!-- <div id="spacer"></div> -->
-    <bottom-bar class="bottomBarProps"></bottom-bar>
+    <bottom-bar v-bind:style="bottomBarProps"></bottom-bar>
   </div>
   
     
 </template>
 
 <script>
-import RouterMethods from '../components/RouterMethods.vue';
 import TopToolbar from '../components/TopToolbar.vue';
 import BottomBar from '../components/BottomBar.vue';
 export default {
   name: 'ToothPage',
   components: {
     TopToolbar,
-    BottomBar,
-    RouterMethods
+    BottomBar
   },
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
+      bottomBarProps: {
+        'grid-column': '1',
+        'background-image': 'linear-gradient(to top, #c4d4e0 0%,#6e9db3 100%)',
+        'display': 'grid',
+        'grid-row': 5,
+      },
     }
   },
   methods: {
@@ -47,17 +49,20 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
-.bottomBarProps {
-    grid-column: 1;
-    background-image: linear-gradient(to top, #c4d4e0 0%,#6e9db3 100%);
-    /* grid-column: 1 / 3; */
-    display: grid;
+
+.header {
+  grid-row: 2;
+}
+
+.paragraph {
+  grid-row: 3;
 }
 
 .bigtoothdiv{
 	text-align: center;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
+  grid-row: 4;
 }
 
 #bigtooth{
