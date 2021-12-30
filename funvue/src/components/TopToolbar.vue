@@ -11,7 +11,7 @@
 
         <div id="button-wrapper" class="menu-button-in" v-bind:class="{ 'menu-button-invisible':  smallScreenOnLoad, 'menu-button-out':buttonAnimate }">
           <!-- TO DO: add in routing once I have additional pages -->
-          <vk-button size="small" class="menu-button" v-bind:class="{ 'selected':  page.selected }" type="primary" v-for="page in pages" v-bind:key="page.id">
+          <vk-button size="small" class="menu-button" v-bind:class="{ 'selected':  page.selected }" type="primary" v-for="page in pages" v-bind:key="page.id" @click="navigateToPage(page.path)">
             {{ page.title }}
           </vk-button>
           <!-- <vk-button size="small" class="menu-button" type="primary" @click="$refs.childModal.showModal()">Login</vk-button> -->
@@ -213,8 +213,8 @@ export default {
 }
 
 .toolbar {
+  /* grid-row: 1; */
   position: absolute;
-  top: -60px;
   left: 0;
   right: 0;
   height: 60px;
