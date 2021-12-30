@@ -1,3 +1,8 @@
+## TO DO
+
+- add event handlers in jupyternb iframe pages to resize the iframe upon window size change
+
+
 # Theme
 * default UIkit theme is in node_modules/@vuikit/theme/dist/vuikit.css
 
