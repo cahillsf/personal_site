@@ -48,6 +48,7 @@ footer {
     height: 60px;
     position: relative;
     grid-template-columns: repeat(2, 1fr);
+    grid-row: 8;
 }
 
 #icons{
