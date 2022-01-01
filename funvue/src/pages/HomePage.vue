@@ -1,7 +1,13 @@
 <template>
-  <div class="homeGrid">
-    <top-toolbar></top-toolbar>
-    <h1 id="home-header">{{ msg }}</h1>
+<div>
+  <top-toolbar></top-toolbar>
+  <div class="singleColGrid">
+    <!-- <top-toolbar></top-toolbar> -->
+    <div id="topText">
+      <h1 id="home-header">{{ msg }}</h1>
+      <p>Hey there!  My name is Stephen Cahill and I'm a technologist working as a Solutions Engineer at <a href="https://www.datadoghq.com/" target="_blank">Datadog</a>.  Check out some of my work below.</p>
+    </div>
+    <div id="cardsDiv">
       <!-- loop through cards in js -->
       <vk-card v-for="card in cards" v-bind:key="card.id" v-bind:style="card.style" :data-aos="card.animation" type="primary" @click="navigateToPage(card.route)" hover>
         <vk-card-title>
@@ -9,9 +15,10 @@
         </vk-card-title>
         <img class="card-img" v-if="card.imgPath" :src="require(`@/assets/project_icons/${card.imgPath}`)"> 
       </vk-card>
+    </div>
     <bottom-bar v-bind:style="bottomBarProps"></bottom-bar>
   </div>
-
+</div>
 </template>
 
 <script>
@@ -29,11 +36,14 @@ export default {
   },
   data () {
     return {
+      //TODO: would be nince to have the margin of the bottom tool bar dynamically generated based on the number of cards
       msg: 'Welcome',
       bottomBarProps: {
         'grid-column': '1 / 3',
         'background-image': 'linear-gradient(to top, #c4d4e0 0%,#6e9db3 100%)',
-        'display': 'none'
+        'display': 'none',
+        'grid-row': 4,
+        // 'margin-top': '30vh', 
       },
       cards: [],
       mainCards: []
@@ -54,7 +64,7 @@ export default {
         //loop through the provided cards adding the proper css to display
         //cards on alternate sides of the webpage with corresponding animation
         keys.forEach(key => {  
-          let i = parseInt(key) + 3;
+          let i = parseInt(key) + 1;
           //define the the style properties object
           let curProps = {
             gridColumn: 0,
@@ -115,7 +125,7 @@ export default {
 
 #home-header {
   font-weight: normal;
-  grid-row: 2;
+  /* grid-row: 2; */
   grid-column: 1 / 3;
 }
 ul {
@@ -126,13 +136,22 @@ li {
   display: inline-block;
   margin: 0 10px;
 }
-a {
+/* a {
   color: #42b983;
+} */
+
+#topText {
+  grid-column: 1/3;
+  grid-row: 2;
 }
 
-.innerGrid {
+#cardsDiv{
+  grid-row: 3;
+  grid-column: 1/3;
+  position: relative;
   display: grid;
-  grid-template-rows: repeat(1fr);
+  grid-template-columns: repeat(2, 1fr);
+  row-gap: 5vh;
 }
 
 
