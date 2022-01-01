@@ -3,8 +3,8 @@
     <top-toolbar></top-toolbar>
     <div class="header">
       <h1 >Three.js Example</h1>
-      <p class ="paragraph">This is a page I put together while exploring the three.js library.  
-          I modeled the tooth using Meshmixer, a very cool free 3-D modeling software, then loaded it as a object into my Three scene.  
+      <p class ="paragraph">This is a page I put together while exploring the <span><a href="https://threejs.org/" target="_blank">three.js library</a></span>.  
+          I modeled the tooth using <span><a href="https://www.meshmixer.com/" target="_blank">Meshmixer</a></span>, a very cool free 3-D modeling software, then loaded it as a object into my Three scene.  
           Just click the front tooth to add another row of teeth to this floating phalanx!  </p>
     </div>
     <div class="bigtoothdiv">
