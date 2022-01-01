@@ -29,7 +29,6 @@ export default {
   },
   data () {
     return {
-        msg: 'Welcome to Your Vue.js App',
         progress:'0',
         loaded: false,
     }
@@ -42,9 +41,7 @@ export default {
     document.removeEventListener('mousedown', this.onDocumentMouseDown, false);
   },
   methods: {
-    doSomething() {
-      this.msg= 'another page hahahahahahahaha!';
-    },
+
     animate() {
         requestAnimationFrame( this.animate );
         var sceneChild = scene.children;
@@ -90,7 +87,6 @@ export default {
     },
     init() {
         let container = document.getElementById('container');
-        // alert("Click the front tooth to increase the size of the flying-v");
         scene = new THREE.Scene();
         camera = new THREE.PerspectiveCamera( 70 , window.innerWidth / window.innerHeight, 1, 500);
         camera.position.z = 200;
@@ -126,6 +122,8 @@ export default {
                 // console.log(myGroup)
                 this.animate();
                 this.loaded = true;
+                alert("Click the front tooth to increase the size of the flying-v");
+
             },
             function ( xhr ) {
                 this.progress = xhr.loaded / xhr.total * 100
