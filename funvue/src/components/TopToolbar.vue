@@ -1,6 +1,6 @@
 <template>
-    <div class="toolbar" role="banner"> 
-        <div id="logo-name">
+    <div class="toolbarSticky" role="banner">
+        <div id="logo-name" v-on="onHomePage ? { click: () => navigateToPage('/') } : {}">
           <img id="logo" src="@/assets/initials.png"/>
           <ul>
 							<li>Stephen Cahill</li>
@@ -20,11 +20,15 @@
         <login-modal ref="childModal"></login-modal>
       
         <div id="icon-div" class="icon-animate-in" v-bind:class="{ 'icon-div-invisible': largeScreenOnLoad, 'icon-animate-out': iconAnimate}">
-          <img @click="showDropdown" ref="sandwichIcon" id="menu-icon2" src="../assets/icons8-menu.svg"/>
+          <button class="hamburger--vortex"  v-bind:class="{ 'is-active': activeBurger}" @click="showDropdown" ref="sandwichIcon" type="button">
+            <span class="hamburger-box">
+              <span class="hamburger-inner"></span>
+            </span>
+          </button>
           <vk-drop animation="slide-top-small" position="top-right" mode="click" ref="dropMenu">
             <vk-navbar-nav-dropdown-nav align="right" navbar-aligned="true" id="nav-dropdown">
               <!-- TO DO: add in routing once I have additional pages -->
-              <vk-nav-item v-for="page in pages" v-bind:key="page.id" :title="page.title"></vk-nav-item>
+              <vk-nav-item v-for="page in pages" v-bind:key="page.id" :title="page.title" @click="navigateToPage(page.path)"></vk-nav-item>
             </vk-navbar-nav-dropdown-nav>
           </vk-drop>
         </div>
@@ -40,6 +44,7 @@ import { IconMenu } from '@vuikit/icons';
 import { Drop } from '../../node_modules/vuikit/lib/drop';
 import { NavbarNavItem, NavbarNavDropdownNav } from '../../node_modules/vuikit/lib/navbar';
 import LoginModal from './LoginModal.vue';
+var counter = 0;
 export default {
   name: 'TopToolbar',
   components: {
@@ -62,6 +67,8 @@ export default {
       firstTime: true,
       iconAnimate: null,
       buttonAnimate: null,
+      onHomePage: true,
+      activeBurger: false,
       pages: [
         {
           '_id': 0,
@@ -71,7 +78,7 @@ export default {
         {
           '_id': 1,
           'title': 'About Me',
-          'path':'/'
+          'path':'/aboutme'
         },
         {
           '_id': 2,
@@ -120,6 +127,8 @@ export default {
       this.msg= 'TopToolbar!;'
     },
     showDropdown(){
+      counter += 1;
+      this.activeBurger = (counter % 2 != 0? true : false)
       console.log("in show dropdown");
       this.dropDisplayed = (this.dropDisplayed ? false : true);
     },
@@ -154,6 +163,13 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+button .hamburger--vortex{
+  background-color: transparent;
+  margin: 0;
+  border: 0;
+  cursor: pointer;
+}
 #logo-name {
   margin-left: 10px;
   font-size: 18px;
@@ -161,6 +177,10 @@ export default {
 }
 #logo-name * {
   grid-row: 1;
+}
+
+#logo-name:hover {
+  cursor: pointer;
 }
 
 #logo-name ul {
@@ -211,6 +231,21 @@ export default {
   width: 100%;
 }
 
+.toolbarSticky {
+  /* grid-row: 1; */
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-image: linear-gradient(to top, #c4d4e0 0%,#6e9db3 100%);
+  color: white;
+  font-weight: 600;
+}
+
 .toolbar {
   /* grid-row: 1; */
   position: absolute;
@@ -229,6 +264,8 @@ export default {
   display: grid;
   position: absolute;
   right: -10vw;
+  background-color: transparent;
+  margin: 0;
 }
 
 .icon-div-invisible{
@@ -360,6 +397,78 @@ export default {
       width: 0;
     }
 }
+.hamburger {
+  padding: 15px 15px;
+  display: inline-block;
+  cursor: pointer;
+  transition-property: opacity, filter;
+  transition-duration: 0.15s;
+  transition-timing-function: linear;
+  font: inherit;
+  color: inherit;
+  text-transform: none;
+  background-color: transparent;
+  border: 0;
+  margin: 0;
+  overflow: visible; }
+  .hamburger:hover {
+    opacity: 0.7; }
+  .hamburger.is-active:hover {
+    opacity: 0.7; }
+  .hamburger.is-active .hamburger-inner,
+  .hamburger.is-active .hamburger-inner::before,
+  .hamburger.is-active .hamburger-inner::after {
+    background-color: #000; }
 
+.hamburger-box {
+  width: 40px;
+  height: 24px;
+  display: inline-block;
+  position: relative; }
+
+.hamburger-inner {
+  display: block;
+  top: 50%;
+  margin-top: -2px; }
+  .hamburger-inner, .hamburger-inner::before, .hamburger-inner::after {
+    width: 40px;
+    height: 4px;
+    background-color: #000;
+    border-radius: 4px;
+    position: absolute;
+    transition-property: transform;
+    transition-duration: 0.15s;
+    transition-timing-function: ease; }
+  .hamburger-inner::before, .hamburger-inner::after {
+    content: "";
+    display: block; }
+  .hamburger-inner::before {
+    top: -10px; }
+  .hamburger-inner::after {
+    bottom: -10px; }
+
+.hamburger--vortex .hamburger-inner {
+  transition-duration: 0.2s;
+  transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1); }
+  .hamburger--vortex .hamburger-inner::before, .hamburger--vortex .hamburger-inner::after {
+    transition-duration: 0s;
+    transition-delay: 0.1s;
+    transition-timing-function: linear; }
+  .hamburger--vortex .hamburger-inner::before {
+    transition-property: top, opacity; }
+  .hamburger--vortex .hamburger-inner::after {
+    transition-property: bottom, transform; }
+
+.hamburger--vortex.is-active .hamburger-inner {
+  transform: rotate(765deg);
+  transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1); }
+  .hamburger--vortex.is-active .hamburger-inner::before, .hamburger--vortex.is-active .hamburger-inner::after {
+    transition-delay: 0s; }
+  .hamburger--vortex.is-active .hamburger-inner::before {
+    top: 0;
+    opacity: 0; }
+  .hamburger--vortex.is-active .hamburger-inner::after {
+    bottom: 0;
+    transform: rotate(90deg); }
 
 </style>
