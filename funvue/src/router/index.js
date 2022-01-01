@@ -10,6 +10,8 @@ import DecTree from '@/pages/DecTree'
 import JupyterNb from '@/pages/JupyterNb'
 import NetworkGraph from '@/pages/NetworkGraph'
 import NetworkJupyterNb from '@/pages/NetworkJupyterNb'
+import PredatorPrey from '@/pages/PredatorPrey'
+import AboutMe from '@/pages/AboutMe'
 
 Vue.use(Router)
 
@@ -64,6 +66,16 @@ export default new Router({
       path: '/networkjupyternb',
       name: 'NetworkJupyterNb',
       component: NetworkJupyterNb
+    },
+    {
+      path: '/predatorprey',
+      name: 'PredatorPrey',
+      component: PredatorPrey
+    },
+    {
+      path: '/aboutme',
+      name: 'AboutMe',
+      component: AboutMe
     }
   ],
   scrollBehavior (to, from, savedPosition) {
