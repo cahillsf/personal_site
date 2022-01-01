@@ -39,11 +39,6 @@ export default {
       },
     }
   },
-  methods: {
-    doSomething() {
-      this.msg= 'another page hahahahahahahaha!';
-    },
-  },
 };
 </script>
 
