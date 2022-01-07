@@ -5,7 +5,7 @@
     <!-- <top-toolbar></top-toolbar> -->
     <div id="topText">
       <h1 id="home-header">{{ msg }}</h1>
-      <p>Hey there!  My name is Stephen Cahill and I'm a technologist working as a Solutions Engineer at <a href="https://www.datadoghq.com/" target="_blank">Datadog</a>.  Check out some of my work below.</p>
+      <h4 id="intro">Hey there!  My name is Stephen Cahill and I'm a technologist working as a Solutions Engineer at <a href="https://www.datadoghq.com/" target="_blank">Datadog</a>.  Check out some of my work below:</h4>
     </div>
     <div id="cardsDiv">
       <!-- loop through cards in js -->
@@ -102,7 +102,7 @@ export default {
       // TODO: dynamically assign grid row to footer
       showBottomBar() {
         this.bottomBarProps['display'] = 'grid';
-        console.log("show bottom")
+        // console.log("show bottom")
       },
       navigateToPage(route) {
         this.$router.push({ path: route });
@@ -113,14 +113,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.card-img {
-  height: 125px;
-  transition: transform 0.3s;
-}
 
-.uk-card:hover img{
-	transform: rotate(360deg);
-}
 
 
 #home-header {
@@ -128,17 +121,7 @@ export default {
   /* grid-row: 2; */
   grid-column: 1 / 3;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-/* a {
-  color: #42b983;
-} */
+
 
 #topText {
   grid-column: 1/3;
@@ -154,5 +137,27 @@ li {
   row-gap: 5vh;
 }
 
+.card-img {
+  height: 125px;
+  transition: transform 0.3s;
+}
+
+.uk-card:hover img{
+	transform: rotate(360deg);
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+h4 {
+  text-align: center;
+  margin: 3%;
+}
 
 </style>
