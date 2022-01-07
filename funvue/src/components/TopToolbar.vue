@@ -10,17 +10,14 @@
         <div class="spacer"></div>
 
         <div id="button-wrapper" class="menu-button-in" v-bind:class="{ 'menu-button-invisible':  smallScreenOnLoad, 'menu-button-out':buttonAnimate }">
-          <!-- TO DO: add in routing once I have additional pages -->
-          <vk-button size="small" class="menu-button" v-bind:class="{ 'selected':  page.selected }" type="primary" v-for="page in pages" v-bind:key="page.id" @click="navigateToPage(page.path)">
+          <vk-button size="small" class="menu-button" v-bind:class="{ 'selected':  page.selected }" type="primary" v-for="page in pages" v-bind:key="page.id" v-on="page.selected ? {} : { click: () => navigateToPage(page.path) }">
             {{ page.title }}
           </vk-button>
-          <!-- <vk-button size="small" class="menu-button" type="primary" @click="$refs.childModal.showModal()">Login</vk-button> -->
-          <!-- <vk-button size="small" class="menu-button" type="primary" @click="goToCreateAccount">Create Account</vk-button> -->
         </div>
         <login-modal ref="childModal"></login-modal>
       
         <div id="icon-div" class="icon-animate-in" v-bind:class="{ 'icon-div-invisible': largeScreenOnLoad, 'icon-animate-out': iconAnimate}">
-          <button class="hamburger--vortex"  v-bind:class="{ 'is-active': activeBurger}" @click="showDropdown" ref="sandwichIcon" type="button">
+          <button id="hamburger" class="hamburger--vortex"  v-bind:class="{ 'is-active': activeBurger}" @click="showDropdown" ref="sandwichIcon" type="button">
             <span class="hamburger-box">
               <span class="hamburger-inner"></span>
             </span>
@@ -28,7 +25,7 @@
           <vk-drop animation="slide-top-small" position="top-right" mode="click" ref="dropMenu">
             <vk-navbar-nav-dropdown-nav align="right" navbar-aligned="true" id="nav-dropdown">
               <!-- TO DO: add in routing once I have additional pages -->
-              <vk-nav-item v-for="page in pages" v-bind:key="page.id" :title="page.title" @click="navigateToPage(page.path)"></vk-nav-item>
+              <vk-nav-item v-for="page in pages" v-bind:key="page.id" :title="page.title" v-on="page.selected ? {} : { click: () => navigateToPage(page.path) }"></vk-nav-item>
             </vk-navbar-nav-dropdown-nav>
           </vk-drop>
         </div>
@@ -83,12 +80,12 @@ export default {
         {
           '_id': 2,
           'title': 'CV',
-          'path':'/'
+          'path':'/CV'
         },
         {
           '_id': 3,
           'title': 'Contact Me',
-          'path':'/'
+          'path':'/contactme'
         },
       ]
     }
@@ -97,7 +94,7 @@ export default {
 
     if(window.innerWidth > 650){
       this.largeScreenOnLoad = true;
-      console.log("large screen is " + this.largeScreenOnLoad)
+      // console.log("large screen is " + this.largeScreenOnLoad)
       return;
     }
     this.smallScreenOnLoad = true;
@@ -116,9 +113,7 @@ export default {
       pageKeys.forEach(key => {
         let curPage = Object.values(this.pages).find(el => el._id === parseInt(key));
         let jsonCurPage = JSON.parse(JSON.stringify(curPage));
-        console.log(jsonCurPage.path);
         if (this.$router.currentRoute.path == jsonCurPage.path){
-          console.log("match found!");
           curPage['selected'] = true;
         }
       })
@@ -164,7 +159,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
-button .hamburger--vortex{
+#hamburger {
   background-color: transparent;
   margin: 0;
   border: 0;
@@ -354,7 +349,19 @@ button .hamburger--vortex{
       position: relative;
     }
 
-    50% {
+    80% {
+      left: -10vw;
+      position: relative;
+      opacity: 0.9;
+    }
+    
+    40% {
+      left: -80vw;
+      position: relative;
+      opacity: 0.4;
+    }
+
+    /* 50% {
       left: -10vw;
       position: relative;
       opacity: 0.9;
@@ -363,8 +370,8 @@ button .hamburger--vortex{
     10% {
       left: -50vw;
       position: relative;
-      opacity: 0.5;
-    }
+      opacity: 0.5; 
+    }*/
     0% {
       left: -100vw;
       position: relative;
