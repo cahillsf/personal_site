@@ -12,6 +12,8 @@ import NetworkGraph from '@/pages/NetworkGraph'
 import NetworkJupyterNb from '@/pages/NetworkJupyterNb'
 import PredatorPrey from '@/pages/PredatorPrey'
 import AboutMe from '@/pages/AboutMe'
+import CV from '@/pages/CV'
+import ContactMe from '@/pages/ContactMe'
 
 Vue.use(Router)
 
@@ -76,6 +78,16 @@ export default new Router({
       path: '/aboutme',
       name: 'AboutMe',
       component: AboutMe
+    },
+    {
+      path: '/CV',
+      name: 'CV',
+      component: CV
+    },
+    {
+      path: '/contactme',
+      name: 'ContactMe',
+      component: ContactMe
     }
   ],
   scrollBehavior (to, from, savedPosition) {
