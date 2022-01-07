@@ -56,4 +56,15 @@ export default {
   grid-template-columns: 1fr;
   row-gap: 60px;
 }
+
+canvas {
+  width: 90vw;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 8px 4px rgba(0, 0, 0, 0.1);
+}
+
+p {
+  text-align: left;
+  margin: 3%;
+}
 </style>
