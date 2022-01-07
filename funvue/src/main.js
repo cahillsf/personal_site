@@ -8,6 +8,7 @@ Vue.config.productionTip = false
 Vue.mixin({
   methods: {
     navigateToPage: function (route) {
+      // console.log("pushing " + route)
       this.$router.push({ path: route });
     },
     backOnePage: function () {
