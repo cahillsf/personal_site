@@ -6,7 +6,7 @@
         <table id="icons">
             <td><a href="https://github.com/cahillsf" target="_blank"><img src="@/assets/ghIcon.png"/></a></td>
             <td><a href="https://www.linkedin.com/in/cahillsf/" target="_blank"><img src="@/assets/lin.png"/></a></td>
-            <td><a href="mailto: cahillsf9@gmail.com" target="_blank"><img src="@/assets/email.png"/></a></td>
+            <td><a href="mailto:cahillsf9@gmail.com" target="_blank"><img src="@/assets/email.png"/></a></td>
         </table>
 
     </div>
@@ -45,10 +45,11 @@ footer {
     padding-left: 20px;
 }
 #footer-div {
-    height: 60px;
+    height: 80px;
     position: relative;
     grid-template-columns: repeat(2, 1fr);
-    grid-row: 8;
+    bottom: 0;
+    /* grid-row: 8; */
 }
 
 #icons{
