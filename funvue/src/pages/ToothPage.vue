@@ -3,9 +3,8 @@
     <top-toolbar></top-toolbar>
     <div class="header">
       <h1 >Three.js Example</h1>
-      <p class ="paragraph">This is a page I put together while exploring the <span><a href="https://threejs.org/" target="_blank">three.js library</a></span>.  
-          I modeled the tooth using <span><a href="https://www.meshmixer.com/" target="_blank">Meshmixer</a></span>, a very cool free 3-D modeling software, then loaded it as a object into my Three scene.  
-          Just click the front tooth to add another row of teeth to this floating phalanx!  </p>
+      <h3 class ="paragraph">This is a page I put together while exploring the <span><a href="https://threejs.org/" target="_blank">three.js library</a></span>.  
+          I modeled the tooth using <span><a href="https://www.meshmixer.com/" target="_blank">Meshmixer</a></span>, a very cool free 3-D modeling software, then loaded it as a object into my Three scene.  Select the icon below to check out the page, then click the front tooth to add another row of teeth to this floating phalanx!  </h3>
     </div>
     <div class="bigtoothdiv">
       <div id="imgdiv">
@@ -56,7 +55,10 @@ export default {
   grid-row: 2;
 }
 
-
+.paragraph {
+  text-align: left;
+  margin: 3%;
+}
 .bigtoothdiv{
 	text-align: center;
 	display: grid;
@@ -75,9 +77,5 @@ export default {
 	grid-column: 2/3;
 }
 
-/* #spacer{
-  grid-row: 4;
-  height: 5vh;
-} */
 
 </style>

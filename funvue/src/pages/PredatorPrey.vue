@@ -3,7 +3,9 @@
     <top-toolbar></top-toolbar>
     <div class="header"> 
       <h1>C++ Predator-Prey Simulation </h1>
-            <p>This was an exercise I completed to demonstrate understanding of object oriented programming in C++ for NYU Tandon's online bridge course.  I used XCode as an IDE to generate this 20 x 20 array where the predators are X's and the prey are o's.  The world is initialized randomly at the beginning of the program with 5 predators and 100 prey.  Each time the user hits "Enter" a segment of time passes, and the animals on the board will act according to the following rules:</p>
+            <p>
+              This was an exercise I completed to demonstrate understanding of object oriented programming in C++ for NYU Tandon's online bridge course.  I used XCode as an IDE to generate this 20 x 20 array where the predators are X's and the prey are o's.  View the source code <a href="https://github.com/cahillsf/doodlebug" target="_blank">here.</a><br/><br/>The world is initialized randomly at the beginning of the program with 5 predators and 100 prey.  Each time the user hits "Enter" a segment of time passes, and the animals on the board will act according to the following rules:
+            </p>
             <p id="rules">
                 The goal for this project is to create a simple two-dimensional predator-prey simulation. In this simulation the prey are ants and the predators are doodlebugs. These critters live in a world composed of a 20 x 20 grid of cells. Only one critter may occupy a cell at a time. The grid is enclosed, so a critter is not allowed to move off the edges of the world. Time is simulated in time steps. Each critter performs some action every time step. <br/><br/>
 
@@ -25,7 +27,7 @@
 
             </p>
             <p>
-              View the source code <a href="https://github.com/cahillsf/doodlebug" target="_blank">here.</a>  Check out the images below for screen captures of the program in action:
+                Check out the images below for screen captures of the program in action:
             </p>
     </div>
    <div class="imgDiv">
@@ -63,24 +65,19 @@ export default {
       },
     }
   },
-  methods: {
-    
-  },
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 p {
-    text-align: left;
-    /* padding: 5px; */
-    margin: 3%;
+  text-align: left;
+  margin: 3%;
 }
 .bottomBarProps {
-    grid-column: 1;
-    background-image: linear-gradient(to top, #c4d4e0 0%,#6e9db3 100%);
-    /* grid-column: 1 / 3; */
-    display: grid;
+  grid-column: 1;
+  background-image: linear-gradient(to top, #c4d4e0 0%,#6e9db3 100%);
+  /* grid-column: 1 / 3; */
+  display: grid;
 }
 
 .header {
@@ -98,10 +95,9 @@ p {
 }
 
 .imgDiv{
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-row: 3;
-    text-align: center;
+  grid-template-columns: 1fr;
+  grid-row: 3;
+  text-align: center;
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	grid-column-gap: 20px;
