@@ -1,6 +1,11 @@
 ## TO DO
 
-- add event handlers in jupyternb iframe pages to resize the iframe upon window size change
+- make sure DD instrumentation works
+  * passing in RUM envvars to Vue
+- containerize 
+- production build
+  * updating all sensitive info for config -- MongodDB users/pws/access, flask userrole and pword -- as envvars
+- go live
 
 
 # Theme
@@ -39,6 +44,8 @@ mongoimport -u "root" -p "example" --type csv --authenticationDatabase admin -d 
 from the container bash: `mongosh --username root --password example --authenticationDatabase admin`
 
 `mongosh --username flask-role --password toor --authenticationDatabase sitecontent`
+
+db.serverStatus().connections
 
 use sitecontent
 var col = db.cards
