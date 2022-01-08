@@ -1,6 +1,7 @@
 <template>
  <div class="contactMeGrid">
     <top-toolbar></top-toolbar>
+    
     <div class="header">
       <h1>Get In Touch</h1>
     </div>
@@ -14,14 +15,16 @@
         <h4>Or tell me a bit about yourself and send a message below:</h4>
         <form>
             <p>Email:</p>
-            <input class="uk-textarea" type="text"  placeholder="Enter your email" v-model="email">
+            <input class="uk-textarea" type="text"  placeholder="Enter your email" v-model="messageObj.email">
             <p>Name:</p>
-            <input class="uk-textarea" type="text" placeholder="Enter your name" v-model="submitterName">
+            <input class="uk-textarea" type="text" placeholder="Enter your name" v-model="messageObj['submitterName']">
             <p>Message:</p>
-            <input class="uk-textarea" type="text" placeholder="Enter your message" v-model="message">
+            <input class="uk-textarea" type="text" placeholder="Enter your message" v-model="messageObj.message">
+            <p :style="errorMsg" id="incorrect">Please fill in all fields and ensure a valid email address is used</p>
         </form>
-        <vk-button id="submitButton">Submit</vk-button>
+        <vk-button id="submitButton" @click="submitMessage">Submit</vk-button>
     </div>
+    <vk-notification position="bottom-center" :messages.sync="messages"></vk-notification>
     <bottom-bar v-bind:style="bottomBarProps"></bottom-bar>
   </div>
   
@@ -29,15 +32,18 @@
 </template>
 
 <script>
+import axios from 'axios';
 import TopToolbar from '../components/TopToolbar.vue';
 import BottomBar from '../components/BottomBar.vue';
 import { Button } from '../../node_modules/vuikit/lib/button';
+import { Notification } from '../../node_modules/vuikit/lib/notification';
 export default {
   name: 'ContactMe',
   components: {
     TopToolbar,
     BottomBar,
     VkButton: Button,
+    VkNotification: Notification
   },
   data () {
     return {
@@ -48,15 +54,56 @@ export default {
         'display': 'grid',
         'grid-row': 5,
       },
-      email: '',
-      submitterName: '',
-      message: '',
+      errorMsg: {
+        display: 'none',
+        color:'red'
+      },
+      messageObj: {
+        email: '',
+        submitterName: '',
+        message: ''
+      },
+      messages: []
     }
   },
   methods: {
     sendEmail() {
       window.open("mailto:cahillsf9@gmail.com")
     },
+    async submitMessage(){
+        console.log(JSON.stringify(this.messageObj));
+        var stringMsgObj = JSON.parse(JSON.stringify(this.messageObj));
+        for (var key of Object.keys(stringMsgObj)) {
+            if(stringMsgObj[key] === ""){
+              this.emptyInputField();
+              return
+            }
+        }
+        const path = 'http://localhost:8000/createMessage';
+        const response = await axios.post(path, stringMsgObj,{withCredentials:true})
+          .then((res) => { 
+            // console.log(res);
+            this.successfulSubmission();
+          })
+          .catch((error) => {
+            // eslint-disable-next-line
+            console.error(error);
+          });
+    },
+    emptyInputField() {
+        this.errorMsg.display = 'inline';
+    },
+    successfulSubmission() {
+        this.messages.push({message:'Your message has been sent successfully.  Thanks for reaching out!', status:'success'})
+        let keys = Object.keys(this.messageObj);
+        keys.forEach(key => {
+          this.messageObj[key] = '';
+        })
+        if (this.errorMsg.display == 'inline'){
+          this.errorMsg.display = 'none';
+        }
+    }
+
   },
 };
 </script>
