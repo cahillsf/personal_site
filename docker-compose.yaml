@@ -26,7 +26,6 @@ services:
         MONGO_INITDB_ROOT_USERNAME: root
         MONGO_INITDB_ROOT_PASSWORD: example
       volumes:
-    #     - ./fortune-teller-mysql/conf.d:/etc/mysql/conf.d
         - ./mongo-db/mongo-db-init-files:/docker-entrypoint-initdb.d
     #   labels:
     #     com.datadoghq.ad.check_names: '["mysql"]'
@@ -34,23 +33,21 @@ services:
     #     com.datadoghq.ad.instances: '[{"server": "%%host%%", "user": "datadog","pass": "tacosandburritos"}]'
       ports:
         - '27017:27017'
-    # express_server:
-    #   build:
-    #     dockerfile: Dockerfile
-    #     context: ./fortune-teller-express
-    #   depends_on: 
-    #     - mysql_db
-    #   environment: 
-    #     - DD_AGENT_HOST=datadog-agent-ft
-    #   ports:
-    #     - '8080:8080'
-    # angular_web:
-    #   build:
-    #     dockerfile: Dockerfile
-    #     context: ./fortune-teller-ng
-    #   depends_on: 
-    #     - express_server
-    #   env_file:
-    #     - ~/sandbox.docker.env
-    #   ports:
-    #     - '4200:4200'
+    flask_server:
+      build:
+        dockerfile: Dockerfile
+        context: ./flask-server
+      # depends_on: 
+      #   - mysql_db
+      # environment: 
+      #   - DD_AGENT_HOST=datadog-agent-ft
+      ports:
+        - '8000:8000'
+    vue_web:
+      build:
+        dockerfile: Dockerfile
+        context: ./funvue
+      # env_file:
+      #   - ~/sandbox.docker.env
+      ports:
+        - '8080:80'

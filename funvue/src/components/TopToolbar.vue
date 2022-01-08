@@ -1,24 +1,31 @@
 <template>
-    <div class="toolbar" role="banner">
-        <span id="welcome">{{ msg }}</span>
+    <div class="toolbarSticky" role="banner">
+        <div id="logo-name" v-on="onHomePage ? { click: () => navigateToPage('/') } : {}">
+          <img id="logo" src="@/assets/initials.png"/>
+          <ul>
+							<li>Stephen Cahill</li>
+							<li>Developer</li>
+          </ul>
+        </div>
         <div class="spacer"></div>
 
         <div id="button-wrapper" class="menu-button-in" v-bind:class="{ 'menu-button-invisible':  smallScreenOnLoad, 'menu-button-out':buttonAnimate }">
-          <vk-button size="small" class="menu-button" type="primary">500</vk-button>
-          <vk-button size="small" class="menu-button" type="primary">400</vk-button>
-          <vk-button size="small" class="menu-button" type="primary" @click="$refs.childModal.showModal()">Login</vk-button>
-          <vk-button size="small" class="menu-button" type="primary" @click="goToCreateAccount">Create Account</vk-button>
+          <vk-button size="small" class="menu-button" v-bind:class="{ 'selected':  page.selected }" type="primary" v-for="page in pages" v-bind:key="page.id" v-on="page.selected ? {} : { click: () => navigateToPage(page.path) }">
+            {{ page.title }}
+          </vk-button>
         </div>
         <login-modal ref="childModal"></login-modal>
       
         <div id="icon-div" class="icon-animate-in" v-bind:class="{ 'icon-div-invisible': largeScreenOnLoad, 'icon-animate-out': iconAnimate}">
-          <img @click="showDropdown" ref="sandwichIcon" id="menu-icon2" src="../assets/icons8-menu.svg"/>
+          <button id="hamburger" class="hamburger--vortex"  v-bind:class="{ 'is-active': activeBurger}" @click="showDropdown" ref="sandwichIcon" type="button">
+            <span class="hamburger-box">
+              <span class="hamburger-inner"></span>
+            </span>
+          </button>
           <vk-drop animation="slide-top-small" position="top-right" mode="click" ref="dropMenu">
             <vk-navbar-nav-dropdown-nav align="right" navbar-aligned="true" id="nav-dropdown">
-              <vk-nav-item title="500"></vk-nav-item>
-              <vk-nav-item title="400"></vk-nav-item>
-              <vk-nav-item title="Login"></vk-nav-item>
-              <vk-nav-item title="Create Account"></vk-nav-item>
+              <!-- TO DO: add in routing once I have additional pages -->
+              <vk-nav-item v-for="page in pages" v-bind:key="page.id" :title="page.title" v-on="page.selected ? {} : { click: () => navigateToPage(page.path) }"></vk-nav-item>
             </vk-navbar-nav-dropdown-nav>
           </vk-drop>
         </div>
@@ -34,6 +41,7 @@ import { IconMenu } from '@vuikit/icons';
 import { Drop } from '../../node_modules/vuikit/lib/drop';
 import { NavbarNavItem, NavbarNavDropdownNav } from '../../node_modules/vuikit/lib/navbar';
 import LoginModal from './LoginModal.vue';
+var counter = 0;
 export default {
   name: 'TopToolbar',
   components: {
@@ -56,12 +64,37 @@ export default {
       firstTime: true,
       iconAnimate: null,
       buttonAnimate: null,
+      onHomePage: true,
+      activeBurger: false,
+      pages: [
+        {
+          '_id': 0,
+          'title': 'Home',
+          'path':'/',
+        },
+        {
+          '_id': 1,
+          'title': 'About Me',
+          'path':'/aboutme'
+        },
+        {
+          '_id': 2,
+          'title': 'CV',
+          'path':'/CV'
+        },
+        {
+          '_id': 3,
+          'title': 'Contact Me',
+          'path':'/contactme'
+        },
+      ]
     }
   },
   mounted(){
+
     if(window.innerWidth > 650){
       this.largeScreenOnLoad = true;
-      console.log("large screen is " + this.largeScreenOnLoad)
+      // console.log("large screen is " + this.largeScreenOnLoad)
       return;
     }
     this.smallScreenOnLoad = true;
@@ -69,16 +102,28 @@ export default {
   },
   created(){
     window.addEventListener("resize", this.trackResize);
+    this.setCurPageClass();
   },
   destroyed(){
     window.removeEventListener("resize", this.trackResize);
-
   },
   methods: {
+    setCurPageClass() {
+      let pageKeys = Object.keys(this.pages);
+      pageKeys.forEach(key => {
+        let curPage = Object.values(this.pages).find(el => el._id === parseInt(key));
+        let jsonCurPage = JSON.parse(JSON.stringify(curPage));
+        if (this.$router.currentRoute.path == jsonCurPage.path){
+          curPage['selected'] = true;
+        }
+      })
+    },
     doSomething() {
       this.msg= 'TopToolbar!;'
     },
     showDropdown(){
+      counter += 1;
+      this.activeBurger = (counter % 2 != 0? true : false)
       console.log("in show dropdown");
       this.dropDisplayed = (this.dropDisplayed ? false : true);
     },
@@ -113,9 +158,42 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-#welcome{
-  margin-left: 3%;
+
+#hamburger {
+  background-color: transparent;
+  margin: 0;
+  border: 0;
+  cursor: pointer;
+}
+#logo-name {
+  margin-left: 10px;
   font-size: 18px;
+  display: grid;
+}
+#logo-name * {
+  grid-row: 1;
+}
+
+#logo-name:hover {
+  cursor: pointer;
+}
+
+#logo-name ul {
+  list-style-type: none;
+  padding-left: 5px;
+}
+
+#logo-name li{
+	text-align: left;
+	margin: 0;
+	padding: 0;
+}
+
+#logo {
+  width: 50px;
+	height: 50px;
+	position: relative;
+  top: 21px;
 }
 
 #menu-icon2{
@@ -134,6 +212,11 @@ export default {
   position: relative;
   margin-right: 2%;
 }
+
+.selected {
+  background-color: #486988;
+  color: #fff;
+}
 .spacer {
   flex: 1;
 }
@@ -143,16 +226,31 @@ export default {
   width: 100%;
 }
 
-.toolbar {
-  position: absolute;
-  top: 0;
+.toolbarSticky {
+  /* grid-row: 1; */
+  position: fixed;
+  z-index: 1;
   left: 0;
   right: 0;
   height: 60px;
   display: flex;
   align-items: center;
   justify-content: space-around;
-  background-image: linear-gradient(#1a46a5, #289128);
+  background-image: linear-gradient(to top, #c4d4e0 0%,#6e9db3 100%);
+  color: white;
+  font-weight: 600;
+}
+
+.toolbar {
+  /* grid-row: 1; */
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-image: linear-gradient(to top, #c4d4e0 0%,#6e9db3 100%);
   color: white;
   font-weight: 600;
 }
@@ -161,12 +259,18 @@ export default {
   display: grid;
   position: absolute;
   right: -10vw;
+  background-color: transparent;
+  margin: 0;
 }
 
 .icon-div-invisible{
   display: grid;
-  position: absolute;
+  /* position: absolute; */
   right: -10vw;
+  /* width: 0; */
+  position: relative;
+  left: -700vw;
+  opacity: 0;
   width: 0;
 }
 
@@ -245,7 +349,19 @@ export default {
       position: relative;
     }
 
-    50% {
+    80% {
+      left: -10vw;
+      position: relative;
+      opacity: 0.9;
+    }
+    
+    40% {
+      left: -80vw;
+      position: relative;
+      opacity: 0.4;
+    }
+
+    /* 50% {
       left: -10vw;
       position: relative;
       opacity: 0.9;
@@ -254,8 +370,8 @@ export default {
     10% {
       left: -50vw;
       position: relative;
-      opacity: 0.5;
-    }
+      opacity: 0.5; 
+    }*/
     0% {
       left: -100vw;
       position: relative;
@@ -288,6 +404,78 @@ export default {
       width: 0;
     }
 }
+.hamburger {
+  padding: 15px 15px;
+  display: inline-block;
+  cursor: pointer;
+  transition-property: opacity, filter;
+  transition-duration: 0.15s;
+  transition-timing-function: linear;
+  font: inherit;
+  color: inherit;
+  text-transform: none;
+  background-color: transparent;
+  border: 0;
+  margin: 0;
+  overflow: visible; }
+  .hamburger:hover {
+    opacity: 0.7; }
+  .hamburger.is-active:hover {
+    opacity: 0.7; }
+  .hamburger.is-active .hamburger-inner,
+  .hamburger.is-active .hamburger-inner::before,
+  .hamburger.is-active .hamburger-inner::after {
+    background-color: #000; }
 
+.hamburger-box {
+  width: 40px;
+  height: 24px;
+  display: inline-block;
+  position: relative; }
+
+.hamburger-inner {
+  display: block;
+  top: 50%;
+  margin-top: -2px; }
+  .hamburger-inner, .hamburger-inner::before, .hamburger-inner::after {
+    width: 40px;
+    height: 4px;
+    background-color: #000;
+    border-radius: 4px;
+    position: absolute;
+    transition-property: transform;
+    transition-duration: 0.15s;
+    transition-timing-function: ease; }
+  .hamburger-inner::before, .hamburger-inner::after {
+    content: "";
+    display: block; }
+  .hamburger-inner::before {
+    top: -10px; }
+  .hamburger-inner::after {
+    bottom: -10px; }
+
+.hamburger--vortex .hamburger-inner {
+  transition-duration: 0.2s;
+  transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1); }
+  .hamburger--vortex .hamburger-inner::before, .hamburger--vortex .hamburger-inner::after {
+    transition-duration: 0s;
+    transition-delay: 0.1s;
+    transition-timing-function: linear; }
+  .hamburger--vortex .hamburger-inner::before {
+    transition-property: top, opacity; }
+  .hamburger--vortex .hamburger-inner::after {
+    transition-property: bottom, transform; }
+
+.hamburger--vortex.is-active .hamburger-inner {
+  transform: rotate(765deg);
+  transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1); }
+  .hamburger--vortex.is-active .hamburger-inner::before, .hamburger--vortex.is-active .hamburger-inner::after {
+    transition-delay: 0s; }
+  .hamburger--vortex.is-active .hamburger-inner::before {
+    top: 0;
+    opacity: 0; }
+  .hamburger--vortex.is-active .hamburger-inner::after {
+    bottom: 0;
+    transform: rotate(90deg); }
 
 </style>

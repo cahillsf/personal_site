@@ -1,3 +1,13 @@
+## TO DO
+
+- make sure DD instrumentation works
+  * passing in RUM envvars to Vue
+- containerize 
+- production build
+  * updating all sensitive info for config -- MongodDB users/pws/access, flask userrole and pword -- as envvars
+- go live
+
+
 # Theme
 * default UIkit theme is in node_modules/@vuikit/theme/dist/vuikit.css
 
@@ -34,6 +44,8 @@ mongoimport -u "root" -p "example" --type csv --authenticationDatabase admin -d 
 from the container bash: `mongosh --username root --password example --authenticationDatabase admin`
 
 `mongosh --username flask-role --password toor --authenticationDatabase sitecontent`
+
+db.serverStatus().connections
 
 use sitecontent
 var col = db.cards

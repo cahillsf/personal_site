@@ -5,7 +5,17 @@ import App from './App'
 import router from './router'
 
 Vue.config.productionTip = false
-
+Vue.mixin({
+  methods: {
+    navigateToPage: function (route) {
+      // console.log("pushing " + route)
+      this.$router.push({ path: route });
+    },
+    backOnePage: function () {
+      this.$router.go(-1);
+    },
+  },
+})
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
@@ -13,3 +23,5 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
+
+
