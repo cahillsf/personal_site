@@ -25,7 +25,8 @@ app.config.from_object(__name__)
 # enable CORS
 # CORS(app, resources={r'/*': {'origins': '*'}})
 CORS(app, origins=["http://localhost:8080"], headers=['Content-Type'], expose_headers=['Access-Control-Allow-Origin'], supports_credentials=True)
-client = pymongo.MongoClient('mongodb://flask-role:toor@localhost:27017/sitecontent?authSource=sitecontent')
+# client = pymongo.MongoClient('mongodb://flask-role:toor@localhost:27017/sitecontent?authSource=sitecontent')
+client = pymongo.MongoClient('mongodb://flask-role:toor@mongodb:27017/sitecontent?authSource=sitecontent')
 
 def create_user_obj(input):
     clean_obj = {'email': str(input['email']), 'name': str(input['submitterName']), 'message':str(input['message'])}
