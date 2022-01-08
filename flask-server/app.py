@@ -4,7 +4,6 @@ from ddtrace import Pin, patch
 import pymongo
 from pprint import pprint
 import sys
-import jwt
 import datetime
 import os
 #import ddtrace.profiling.auto
@@ -28,77 +27,32 @@ app.config.from_object(__name__)
 CORS(app, origins=["http://localhost:8080"], headers=['Content-Type'], expose_headers=['Access-Control-Allow-Origin'], supports_credentials=True)
 client = pymongo.MongoClient('mongodb://flask-role:toor@localhost:27017/sitecontent?authSource=sitecontent')
 
+def create_user_obj(input):
+    clean_obj = {'email': str(input['email']), 'name': str(input['submitterName']), 'message':str(input['message'])}
+    print(clean_obj, file=sys.stderr)
+    return clean_obj
 
-def encode_auth_token(usr_id):
-    # https://www.bacancytechnology.com/blog/flask-jwt-authentication
-    # secret_key is set via the above link secrets.token_hex(16)
-    # FIXME: when containerizing, this will have to be dynamically generated
-    secret_key = os.getenv('SECRET_KEY')
-    try:
-        exp = datetime.datetime.utcnow() + datetime.timedelta(days=1, seconds=5)
-        payload = {
-            'exp': exp,
-            'iat': datetime.datetime.utcnow(),
-            'sub': usr_id
-        }
-        # return a list of 2 items, the token and the exp date to set in the reponse header
-        return [jwt.encode(
-            payload,
-            secret_key,
-            algorithm='HS256'
-        ), exp]
-    except Exception as e:
-        return e
-
-# sanity check route
-@app.route('/ping', methods=['GET'])
-def ping_pong():
-    return jsonify('pong!')
 
 @app.route('/cards', methods=['GET'])
 def all_cards():
     db = client['sitecontent']
     cards = db.cards
     cards_cursor = cards.find({})
-    print("hello", file=sys.stderr)
-    print(cards_cursor)
+    print(cards_cursor, file=sys.stderr)
     cards_dict = {}
     for index, document in enumerate(cards_cursor):
         print(document, file=sys.stderr)
         cards_dict[index] = document
-    print(type(cards_dict), file=sys.stderr)
+    # print(type(cards_dict), file=sys.stderr)
     return (cards_dict)
 
-@app.route('/userAuth', methods=['POST'])
-def user_auth():
-    try:
-        db = client['sitecontent']
-        # search user in users collection of sitecontent db
-        result = list(db.users.find({ "handle": request.authorization.username }))
-        # check password
-        if not (request.authorization.password == result[0]['password']):
-            return Response("{'Error':'User Not Found or Password Incorrect'}", status=400, mimetype='application/json')
-        # encode the JWT with usr handle (email) as sub
-        token = encode_auth_token(result[0]['handle'])
-        res = make_response("Success", 200)
-        res.headers["Content-Type"] = "application/json"
-        # print decoded token for debugging purposes
-        print(jwt.decode(token[0],os.getenv('SECRET_KEY'), algorithms=["HS256"]), file=sys.stderr)
-        #  set access token as httpoonly cookie
-        res.set_cookie("access_token", value=token[0], expires=token[1], httponly=True)
-        return res
-    except Exception as e:
-        print(e, file=sys.stderr)
-        return Response("{'Error':'User Not Found or Password Incorrect'}", status=400, mimetype='application/json')
-
-#debug route to check if the access_token is being sent in client response
-@app.route('/testRoute', methods=['POST', 'GET'])
-def testRoute():
-    data_str = request.data.decode('utf-8')
-    cookies_list = data_str.split('; ')
-    print(cookies_list)
-    token = request.cookies.get('access_token')
-    print(token, file=sys.stderr)
+@app.route('/createMessage', methods=['POST'])
+def createMessage():
+    print(request.json, file=sys.stderr)
+    db = client['sitecontent']
+    clean_user_obj = create_user_obj(request.json)
+    x = db.messages.insert_one(clean_user_obj)
+    print(x, file=sys.stderr)
     return "OKAY", 200
 
 if __name__ == '__main__':
