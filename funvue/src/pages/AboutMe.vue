@@ -14,7 +14,7 @@
             My road to working in IT started about four years ago when I began pursuing an intellectual curiosity: computer science and programming. Starting with a few MOOC's and intro Python courses, my desire to learn took hold of me and I enrolled in the <span><a href="https://engineering.nyu.edu/academics/programs/nyu-tandon-bridge" target="_blank">NYU Tandon online bridge program</a></span> which teaches the fundamentals of computer science.  The program is designed for people with limited STEM backgrounds to gather the skills needed to pursue a Master's degree in computer science. This intensive six-month curriculum covered programming, discrete mathematics and networking. Following the NYU bridge program, I began pursuit of a <span><a href="https://seidenberg.pace.edu/computer-science-ms" target="_blank">Master's degree in computer science at Pace University</a></span> which I completed in May 2021. 
         </p>
         <p>
-          Prior to working in tech, I spent eight years working as a restaurant manager in the dynamic and thriving dining scence of New York City. Over the course of that time I've managed a diverse range of businesses from quickly growing fast-casual chains such as Dos Toros and Luke's Lobster, to destination pizzerias like Roberta's in Bushwick. I've also accumulated a large and varied skill set. These skills include full HR admininstrative responsibilities for staff sizes ranging from five to fifty employees, developing insightful profit and loss business analyses, full responsibility for vendor relationships, and handling all the nuances embedded in operating successful, high grossing, fast-paced businesses.
+          Prior to working in tech, I spent eight years working as a restaurant manager in the dynamic and thriving dining scence of New York City. Over the course of that time I've managed a diverse range of businesses from quickly growing fast-casual chains such as Dos Toros and Luke's Lobster, to destination pizzerias like Roberta's in Bushwick. Along the way I accumulated the skills to handle full HR admininstrative responsibilities for staff sizes ranging from five to fifty employees, develop insightful profit and loss business analyses,  juggle vendor relationships, and take ownership over all the nuances embedded in operating successful, high grossing, fast-paced businesses.
         </p>
     </div>
     <bottom-bar v-bind:style="bottomBarProps"></bottom-bar>
@@ -63,6 +63,10 @@ export default {
 
   padding-bottom: 5vh;
   grid-row: 2;
+}
+
+#mainDiv p {
+  margin: 3%;
 }
 
 #portrait{
