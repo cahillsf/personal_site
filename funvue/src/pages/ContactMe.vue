@@ -13,7 +13,7 @@
         </div>
         
         <h4>Or tell me a bit about yourself and send a message below:</h4>
-        <form>
+        <form ref="msgForm">
             <p>Email:</p>
             <input class="uk-textarea" type="text"  placeholder="Enter your email" v-model="messageObj.email">
             <p>Name:</p>
@@ -24,7 +24,7 @@
         </form>
         <vk-button id="submitButton" @click="submitMessage">Submit</vk-button>
     </div>
-    <vk-notification position="bottom-center" :messages.sync="messages"></vk-notification>
+    <vk-notification position="top-center" :messages.sync="messages"></vk-notification>
     <bottom-bar v-bind:style="bottomBarProps"></bottom-bar>
   </div>
   
@@ -143,7 +143,7 @@ input{
   position: relative;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 60px 60px 1fr 60px 60px;
+  grid-template-rows: 60px 60px 1fr 120px 60px;
 }
 
 #emailDiv {
