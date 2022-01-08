@@ -88,6 +88,7 @@ export default {
         // console.log(this.cards);
       },
       getCards() {
+        // console.log("ddAppId is "+ process.env.VUE_APP_ddAppId);
         const path = 'http://localhost:8000/cards';
         axios.get(path)
           .then((res) => { 
