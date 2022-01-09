@@ -3,7 +3,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-# COPY vuikit.css ./node_modules/@vuikit/theme/dist/
+COPY vuikit.css ./node_modules/@vuikit/theme/dist/
 RUN npm run build
 
 # production stage
