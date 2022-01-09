@@ -1,0 +1,4 @@
+cat <<EOF
+window.VUE_APP_DD_APP_ID = "${VUE_APP_DD_APP_ID}";
+window.VUE_APP_DD_CLIENT_TOKEN = "${VUE_APP_DD_CLIENT_TOKEN}";
+EOF
