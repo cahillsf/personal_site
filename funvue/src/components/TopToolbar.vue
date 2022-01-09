@@ -13,6 +13,9 @@
           <vk-button size="small" class="menu-button" v-bind:class="{ 'selected':  page.selected }" type="primary" v-for="page in pages" v-bind:key="page.id" v-on="page.selected ? {} : { click: () => navigateToPage(page.path) }">
             {{ page.title }}
           </vk-button>
+          <vk-button size="small" class="menu-button" @click="showMeEnv">
+            Show Me Env
+          </vk-button>
         </div>
         <login-modal ref="childModal"></login-modal>
       
@@ -108,6 +111,10 @@ export default {
     window.removeEventListener("resize", this.trackResize);
   },
   methods: {
+    showMeEnv(){
+      console.log(window.VUE_APP_DD_APP_ID);
+      console.log(window.VUE_APP_ddClientToken);
+    },
     setCurPageClass() {
       let pageKeys = Object.keys(this.pages);
       pageKeys.forEach(key => {
