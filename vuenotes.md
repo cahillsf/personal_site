@@ -1,5 +1,5 @@
 ## TO DO
-
+- debounce window resize event listener
 - make sure DD instrumentation works
   * passing in RUM envvars to Vue
 - containerize 
