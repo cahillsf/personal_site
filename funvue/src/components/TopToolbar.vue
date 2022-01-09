@@ -113,7 +113,7 @@ export default {
   methods: {
     showMeEnv(){
       console.log(window.VUE_APP_DD_APP_ID);
-      console.log(window.VUE_APP_ddClientToken);
+      console.log(window.VUE_APP_DD_CLIENT_TOKEN);
     },
     setCurPageClass() {
       let pageKeys = Object.keys(this.pages);
