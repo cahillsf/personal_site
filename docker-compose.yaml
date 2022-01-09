@@ -47,6 +47,9 @@ services:
       build:
         dockerfile: Dockerfile
         context: ./funvue
+      environment:
+        VUE_APP_DD_APP_ID: root
+        VUE_APP_DD_CLIENT_TOKEN: example
       # env_file:
       #   - ~/sandbox.docker.env
       ports:
