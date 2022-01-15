@@ -8,7 +8,7 @@ Using Datadog products APM, Continous Profiler, and RUM
 * containerized -> from base directory `funvue-project` run `docker compose up --build`
 
 ## Back end: Flask
-* from `flask-server` activate your virtual environment: https://docs.python.org/3/library/venv.html
+* from `flask-server` activate a [virtual environment](https://docs.python.org/3/library/venv.html) using command `python3 -m venv .venv`
 
 * install dependencies: run `pip install -r requirements.txt` 
 
