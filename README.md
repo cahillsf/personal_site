@@ -24,6 +24,7 @@ Using Datadog products APM, Continous Profiler, and RUM
 * website will be running at http://localhost:8080
 
 ## Requirements: 
-* python 3 - https://www.python.org/downloads/
-* docker desktop - https://docs.docker.com/get-docker/
-* Vue cli - https://cli.vuejs.org/
+* [python 3](https://www.python.org/downloads/)
+* [docker desktop](https://docs.docker.com/get-docker/)
+* [Vue cli](https://cli.vuejs.org/)
+* [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) 
