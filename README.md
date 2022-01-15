@@ -10,6 +10,8 @@ Using Datadog products APM, Continous Profiler, and RUM
 ## Back end: Flask
 * from `flask-server` activate a [virtual environment](https://docs.python.org/3/library/venv.html) using command `python3 -m venv .venv`
 
+* activate the virtual environment using command: `source .venv/bin/activate`
+
 * install dependencies: run `pip install -r requirements.txt` 
 
 * run `ddtrace-run python3 app.py` to start the flask server
