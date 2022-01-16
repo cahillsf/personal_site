@@ -1,25 +1,25 @@
 version: '3'
 services:
-    # ddagent:
-    #   image: datadog/agent:latest
-    #   container_name: datadog-agent-ft
-    #   env_file:
-    #     - ~/sandbox.docker.env
-    #   environment:
-    #     - DD_APM_ENABLED=true
-    #     - DD_LOGS_ENABLED=true
-    #     - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
-    #     - DD_APM_NON_LOCAL_TRAFFIC=true
-    #     - DD_AC_EXCLUDE=name:datadog-agent-ft
-    #   volumes: 
-    #     - /var/run/docker.sock:/var/run/docker.sock:ro
-    #     - /proc/:/host/proc/:ro
-    #     - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
-    #   ports:
-    #     - "8126:8126"
-    #   restart: on-failure
-    #   depends_on: 
-    #     - mysql_db
+    ddagent:
+      image: datadog/agent:latest
+      container_name: datadog-agent-ps
+      env_file:
+        - ~/sandbox.docker.env
+      environment:
+        - DD_APM_ENABLED=true
+        - DD_LOGS_ENABLED=true
+        - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
+        - DD_APM_NON_LOCAL_TRAFFIC=true
+        # - DD_AC_EXCLUDE=name:datadog-agent-ft
+      volumes: 
+        - /var/run/docker.sock:/var/run/docker.sock:ro
+        - /proc/:/host/proc/:ro
+        - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
+      ports:
+        - "8126:8126"
+      restart: on-failure
+      depends_on: 
+        - mysql_db
     mongodb:
       image: mongo
       environment:
@@ -39,18 +39,17 @@ services:
         context: ./flask-server
       # depends_on: 
       #   - mysql_db
-      # environment: 
-      #   - DD_AGENT_HOST=datadog-agent-ft
+      environment: 
+              - DD_AGENT_HOST=datadog-agent-ps
       ports:
         - '8000:8000'
     vue_web:
+      # image: cahillsf/ps-vue:0.0.1
       build:
-        dockerfile: Dockerfile
+        # dockerfile: Dockerfile
+        dockerfile: Dockerfiledev
         context: ./funvue
-      environment:
-        VUE_APP_DD_APP_ID: root
-        VUE_APP_DD_CLIENT_TOKEN: example
-      # env_file:
-      #   - ~/sandbox.docker.env
+      env_file:
+        - ~/sandbox.docker.env
       ports:
-        - '8080:80'
+        - '8080:8080'
