@@ -16,17 +16,17 @@ export default {
   created(){
     //TODO: reenable when site is live
 
-    // datadogRum.init({
-    //       applicationId: '5c19ff1f-62dc-467c-8294-f1d54c6583fc',
-    //       clientToken: 'pub953963662d5f76b93bb0370a71113128',
-    //       site: 'datadoghq.com',
-    //       service:'vue-app',
-    //       // Specify a version number to identify the deployed version of your application in Datadog 
-    //       version: '1.0.0',
-    //       sampleRate: 100,
-    //       trackInteractions: true,
-    //       allowedTracingOrigins:["http://localhost:8000"]
-    //     });
+    datadogRum.init({
+          applicationId: window.VUE_APP_DD_APP_ID,
+          clientToken: window.VUE_APP_DD_CLIENT_TOKEN,
+          site: 'datadoghq.com',
+          service:'vue-app',
+          // Specify a version number to identify the deployed version of your application in Datadog 
+          version: '1.0.0',
+          sampleRate: 100,
+          trackInteractions: true,
+          allowedTracingOrigins:["http://localhost:8000"]
+        });
   }
 }
 </script>
