@@ -18,6 +18,8 @@ import ContactMe from '@/pages/ContactMe'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
+  hash: false,
   routes: [
     {
       path: '/',
