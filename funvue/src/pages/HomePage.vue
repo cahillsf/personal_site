@@ -89,7 +89,14 @@ export default {
       },
       getCards() {
         // console.log("ddAppId is "+ process.env.VUE_APP_ddAppId);
-        const path = 'http://localhost:8000/cards';
+
+        // this is the path for local dev and in docker compose
+        // const path = 'http://localhost:8000/cards';
+        
+        // this is the path for k8s deploy-- see /src/nginx.conf 
+        // requests to flask when served via nginx all go through /api base path
+        const path = '/api/cards';
+        console.log("path is " + path)
         axios.get(path)
           .then((res) => { 
             this.mainCards = JSON.parse(JSON.stringify(res.data));
