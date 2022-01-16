@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ps-flask
+spec:
+  selector:
+    matchLabels:
+      app: ps-flask
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ps-flask
+      annotations:
+        ad.datadoghq.com/tags: '{"app": "ps-flask","role": "backend", "library":"python"}'
+    spec:
+      containers:
+      - name: ps-flask
+        image: cahillsf/ps-flask:0.0.4
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DD_AGENT_HOST
+          valueFrom:
+              fieldRef:
+                  fieldPath: status.hostIP
+        imagePullPolicy: IfNotPresent

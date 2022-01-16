@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ps-vue
+spec:
+  selector:
+    matchLabels:
+      app: ps-vue
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ps-vue
+      annotations:
+        ad.datadoghq.com/tags: '{"app": "ps-vue","role": "frontend", "library":"vue"}'
+    spec:
+      containers:
+      - name: ps-vue
+        image: cahillsf/ps-vue:0.0.6
+
+        ports:
+        - containerPort: 80
+        imagePullPolicy: IfNotPresent
