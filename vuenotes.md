@@ -125,8 +125,8 @@ docker build -t ps-vue-dev:0.0.1 ./Dockerfiledev
 
 docker build -f Dockerfiledev -t ps-vue-dev:0.0.6 .
 
-docker image tag ps-vue-dev:0.0.1 cahillsf/ps-vue-dev:0.0.1
-docker image push cahillsf/ps-vue-dev:0.0.1
+docker image tag ps-vue:0.0.7 cahillsf/ps-vue-dev:0.0.7
+docker image push cahillsf/ps-vue:0.0.7
 
 from vue container
 apk --no-cache add curl
