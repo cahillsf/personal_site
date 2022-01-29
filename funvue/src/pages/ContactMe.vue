@@ -79,7 +79,8 @@ export default {
               return
             }
         }
-        const path = 'http://localhost:8000/createMessage';
+        const path = this.$hostname + '/createMessage';
+        // const path = 'http://localhost:8000/createMessage';
         const response = await axios.post(path, stringMsgObj,{withCredentials:true})
           .then((res) => { 
             // console.log(res);

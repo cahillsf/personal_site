@@ -95,7 +95,8 @@ export default {
         
         // this is the path for k8s deploy-- see /src/nginx.conf 
         // requests to flask when served via nginx all go through /api base path
-        const path = '/api/cards';
+        // const path = '/api/cards';
+        const path = this.$hostname + '/cards';
         console.log("path is " + path)
         axios.get(path)
           .then((res) => { 
