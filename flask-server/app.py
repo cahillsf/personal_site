@@ -6,6 +6,7 @@ from pprint import pprint
 import sys
 import datetime
 import os
+### THIS IS THE TRACING BLOCK IN USE IN IMAGE FOR K8S#####
 import ddtrace.profiling.auto
 from ddtrace.profiling.profiler import Profiler
 from ddtrace import config, patch_all, Pin, patch
@@ -13,6 +14,7 @@ config.env = "dev"      # the environment the application is in
 config.service = "flask-server"  # name of your application
 config.version = "0.0.1"  # version of your application
 patch_all()
+##################
 
 # configuration
 
@@ -27,6 +29,8 @@ patch_all()
 # instantiate the app
 app = Flask(__name__)
 app.config.from_object(__name__)
+mongo_client = "mongodb"
+base_url = ""
 # enable CORS
 # CORS(app, resources={r'/*': {'origins': '*'}})
 CORS(app, origins=["http://localhost:8080"], headers=['Content-Type'], expose_headers=['Access-Control-Allow-Origin'], supports_credentials=True)
@@ -39,6 +43,9 @@ client = pymongo.MongoClient('mongodb://flask-role:toor@ps-mongo-service:27017/s
 # connecting to mongodb (container name in docker compose)
 # client = pymongo.MongoClient('mongodb://flask-role:toor@mongodb:27017/sitecontent?authSource=sitecontent')
 
+#use a variable defined in the if name== blocks for client connection
+# client = pymongo.MongoClient('mongodb://flask-role:toor@' + mongo_client + ':27017/sitecontent?authSource=sitecontent')
+
 def create_user_obj(input):
     clean_obj = {'email': str(input['email']), 'name': str(input['submitterName']), 'message':str(input['message'])}
     print(clean_obj, file=sys.stderr)
@@ -47,7 +54,9 @@ def create_user_obj(input):
 
 
 @app.route('/api/cards', methods=['GET'])
+# @app.route(base_url + '/cards', methods=['GET'])
 def all_cards():
+    print("getting cards", file=sys.stderr)
     db = client['sitecontent']
     cards = db.cards
     cards_cursor = cards.find({})
@@ -59,16 +68,16 @@ def all_cards():
     # print(type(cards_dict), file=sys.stderr)
     return (cards_dict)
 
-@app.route('/createMessage', methods=['POST'])
+@app.route('/api/createMessage', methods=['POST'])
 def createMessage():
     print(request.json, file=sys.stderr)
     db = client['sitecontent']
     clean_user_obj = create_user_obj(request.json)
-    x = db.messages.insert_one(clean_user_obj)
+    x = db.messages.insert_one(clean_user_obj)  
     print(x, file=sys.stderr)
     return "OKAY", 200
 
-@app.route('/testRoute', methods=['GET'])
+@app.route('/api/testRoute', methods=['GET'])
 def testRoute():
     print(os.environ.get('DD_AGENT_HOST'), file=sys.stderr)
     app.logger.info(os.environ.get('DD_AGENT_HOST'))
@@ -76,10 +85,14 @@ def testRoute():
     app.logger.info("test route")
     return "OKAY", 200
 
+#local deployment
 if __name__ == '__main__':
     app.run(host="localhost", port=8000, debug=True)
 
+#k8s deployment using gunicorn
 if __name__ != '__main__':
     gunicorn_logger = logging.getLogger('gunicorn.error')
     app.logger.handlers = gunicorn_logger.handlers
     app.logger.setLevel(gunicorn_logger.level)
+    base_url = "/api"
+    mongo_client = "ps-mongo-service"
