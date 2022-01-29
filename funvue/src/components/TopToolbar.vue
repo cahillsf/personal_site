@@ -1,6 +1,7 @@
 <template>
     <div class="toolbarSticky" role="banner">
-        <div id="logo-name" v-on="onHomePage ? { click: () => navigateToPage('/') } : {}">
+        <!-- <div id="logo-name" v-on="onHomePage ? { click: () => navigateToPage('/') } : {}"> -->
+        <div id="logo-name" v-on="onHomePage ? { click: () => this.$router.go() } : { click: () => navigateToPage('/') }">
           <img id="logo" src="@/assets/initials.png"/>
           <ul>
 							<li>Stephen Cahill</li>
@@ -13,11 +14,10 @@
           <vk-button size="small" class="menu-button" v-bind:class="{ 'selected':  page.selected }" type="primary" v-for="page in pages" v-bind:key="page.id" v-on="page.selected ? {} : { click: () => navigateToPage(page.path) }">
             {{ page.title }}
           </vk-button>
-          <vk-button size="small" class="menu-button" @click="showMeEnv">
-            Show Me Env
-          </vk-button>
+          <!-- <vk-button size="small" class="menu-button" @click="testEnv()">
+            TEST
+          </vk-button> -->
         </div>
-        <login-modal ref="childModal"></login-modal>
       
         <div id="icon-div" class="icon-animate-in" v-bind:class="{ 'icon-div-invisible': largeScreenOnLoad, 'icon-animate-out': iconAnimate}">
           <button id="hamburger" class="hamburger--vortex"  v-bind:class="{ 'is-active': activeBurger}" @click="showDropdown" ref="sandwichIcon" type="button">
@@ -28,7 +28,7 @@
           <vk-drop animation="slide-top-small" position="top-right" mode="click" ref="dropMenu">
             <vk-navbar-nav-dropdown-nav align="right" navbar-aligned="true" id="nav-dropdown">
               <!-- TO DO: add in routing once I have additional pages -->
-              <vk-nav-item v-for="page in pages" v-bind:key="page.id" :title="page.title" v-on="page.selected ? {} : { click: () => navigateToPage(page.path) }"></vk-nav-item>
+              <vk-nav-item id="nav-item" v-for="page in pages" v-bind:key="page.id" :title="page.title" v-on="page.selected ? {} : { click: () => navigateToPage(page.path) }"></vk-nav-item>
             </vk-navbar-nav-dropdown-nav>
           </vk-drop>
         </div>
@@ -43,12 +43,10 @@ import { Icon, IconButton } from '../../node_modules/vuikit/lib/icon';
 import { IconMenu } from '@vuikit/icons';
 import { Drop } from '../../node_modules/vuikit/lib/drop';
 import { NavbarNavItem, NavbarNavDropdownNav } from '../../node_modules/vuikit/lib/navbar';
-import LoginModal from './LoginModal.vue';
 var counter = 0;
 export default {
   name: 'TopToolbar',
   components: {
-      LoginModal,
       VkButton: Button,
       VkButtonLink: ButtonLink,
       VkMenu: IconMenu,
@@ -111,10 +109,6 @@ export default {
     window.removeEventListener("resize", this.trackResize);
   },
   methods: {
-    showMeEnv(){
-      console.log(window.VUE_APP_DD_APP_ID);
-      console.log(window.VUE_APP_DD_CLIENT_TOKEN);
-    },
     setCurPageClass() {
       let pageKeys = Object.keys(this.pages);
       pageKeys.forEach(key => {
@@ -124,6 +118,7 @@ export default {
           curPage['selected'] = true;
         }
       })
+      this.onHomePage = (this.$router.currentRoute.path == '/')? true : false;
     },
     doSomething() {
       this.msg= 'TopToolbar!;'
@@ -156,8 +151,9 @@ export default {
         this.buttonAnimate = true;
       }
     },
-    goToCreateAccount(){
-      this.$router.push({ path: '/createaccount' });
+    testEnv() {
+      console.log(window.VUE_APP_DD_APP_ID);
+      console.log(window.VUE_APP_BUILD);
     }
   },
 };
@@ -165,6 +161,13 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.uk-navbar-dropdown-nav > li > a {
+  color: white;
+}
+
+.uk-navbar-dropdown-nav > li:hover > a {
+  color: black;
+}
 
 #hamburger {
   background-color: transparent;
@@ -282,7 +285,7 @@ export default {
 }
 
 .menu-button-invisible{
-  left: -100vw;
+  left: -700vw;
   position: relative;
   opacity: 0;
   width: 0;
@@ -319,9 +322,9 @@ export default {
 
   #nav-dropdown{
     position: absolute;
-    background: rgb(225, 241, 225);
+    background: #1e87f0;
     right: 0px;
-    top: 60px;
+    top: 55px;
   }
 
 }
