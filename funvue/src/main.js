@@ -5,10 +5,13 @@ import App from './App'
 import router from './router'
 
 Vue.config.productionTip = false
+Vue.prototype.$hostname = (window.VUE_APP_BUILD == "kubernetes") ? '/api' : 'http://localhost:8000/api'
+
+
 Vue.mixin({
   methods: {
     navigateToPage: function (route) {
-      // console.log("pushing " + route)
+      console.log("pushing " + route)
       this.$router.push({ path: route });
     },
     backOnePage: function () {
