@@ -1,26 +1,32 @@
 ## TO DO
-- debounce window resize event listener
+
 - make sure DD instrumentation works
-  * passing in RUM envvars to Vue -in k8s
-  * ~~copy in custom style sheet~~
+  * ~passing in RUM envvars to Vue -in k8s~
+  
 - containerize 
   * ~generate images for kube deployment~
-
+### MongoDB
+  * configure as statefulset - protect against data loss
+  
+### VUE
+- debounce window resize event listener
 - style
   * fix up dropdown menu
   * add breakpoint for large screens (increase grid-row gap?  maybe add some rows?)-- so bottom bar is always at bottom -- maybe there's an easier fix here....
+  * ~~copy in custom style sheet~~
+  * ~~better routing--> can i create a router-link within a different element?~~
+  * ~~styling-- figure out a way to keep theming (currently in nodemodules which are in the .gitignore)~~
 
-- production build
+  * ~~hide dropdown menu after user has returned to full page view so that when the browser size is reduced below the breakpoint, it will not be visible~~
+
+### production build
   * updating all sensitive info for config -- MongodDB users/pws/access, flask userrole and pword -- as envvars
   * writing kube yaml deployment
-- go live
+  * ~working AWS K8s config~
+  * go live
 
 
-* ~~better routing--> can i create a router-link within a different element?~~
 
-* ~~styling-- figure out a way to keep theming (currently in nodemodules which are in the .gitignore)~~
-
-* ~~hide dropdown menu after user has returned to full page view so that when the browser size is reduced below the breakpoint, it will not be visible~~
 
 
 # Theme
@@ -121,12 +127,12 @@ Tag the image with the following command: `docker image tag <IMAGE_NAME> <DOCKER
 Push the image to your Docker Hub using the following command: `docker image push <DOCKER_USERNAME>/<IMAGE_NAME>:<TAG>`
 Log in to Docker Hub to find your published image
 
-docker build -t ps-vue-dev:0.0.1 ./Dockerfiledev
+docker build -t ps-vue:0.0.1 .
 
 docker build -f Dockerfiledev -t ps-vue-dev:0.0.6 .
 
-docker image tag ps-vue:0.0.7 cahillsf/ps-vue-dev:0.0.7
-docker image push cahillsf/ps-vue:0.0.7
+docker image tag ps-flask:0.0.1 cahillsf/ps-flask:0.0.1
+docker image push cahillsf/ps-flask:0.0.1
 
 from vue container
 apk --no-cache add curl
@@ -141,3 +147,7 @@ front end is now connection to backend through the configuration in funvue/nginx
 seems like all backend routes will be prepended with /api and forwarded along
 
 need to make sure the mongodb connection uri workss
+
+
+look for this in style sheet
+/*cahill steve custom theme here comment*/
