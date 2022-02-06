@@ -1902,6 +1902,7 @@ select.uk-form-width-xsmall {
 /* Hover + Focus */
 .uk-button-primary:hover,
 .uk-button-primary:focus {
+  /*cahill steve custom theme here comment*/
   /* background-color: #0f7ae5; */
   background-color: #486988;
   color: #fff;
