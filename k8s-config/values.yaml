@@ -6,7 +6,7 @@ datadog:
   securityContext: {}
   hostVolumeMountPropagation: None
   logLevel: DEBUG
-  clusterName: personal_site
+  clusterName: personal-site
   kubeStateMetricsEnabled: false
   kubeStateMetricsCore:
     enabled: true
