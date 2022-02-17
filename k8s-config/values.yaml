@@ -1,0 +1,49 @@
+targetSystem: "linux"
+registry: gcr.io/datadoghq
+
+datadog:
+  apiKey: <DATADOG_API_KEY>
+  securityContext: {}
+  hostVolumeMountPropagation: None
+  logLevel: DEBUG
+  clusterName: minikube
+  kubeStateMetricsEnabled: false
+  kubeStateMetricsCore:
+    enabled: true
+  kubelet:
+    host:
+      valueFrom:
+        fieldRef:
+          fieldPath: status.hostIP
+    tlsVerify: false
+    
+  dogstatsd:
+    port: 8125
+    originDetection: true
+    tags: []
+    tagCardinality: high
+    useSocketVolume: true
+    socketPath: /var/run/datadogs1/dsd.socket
+    hostSocketPath: /var/run/datadogs1/
+    useHostPort: true
+    useHostPID: true
+    nonLocalTraffic: true
+  collectEvents: true
+  leaderElection: true
+  logs:
+    enabled: true
+    containerCollectAll: true
+    containerCollectUsingFiles: true
+  env: 
+    - name: DD_ENV
+      value: dev
+    - name: DD_HOSTNAME
+      valueFrom:
+        fieldRef:
+          fieldPath: spec.nodeName
+  processAgent:
+    enabled: true
+    processCollection: true
+agents:
+  image:
+    tag: 7-jmx
