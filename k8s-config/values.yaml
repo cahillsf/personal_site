@@ -6,7 +6,7 @@ datadog:
   securityContext: {}
   hostVolumeMountPropagation: None
   logLevel: DEBUG
-  clusterName: minikube
+  clusterName: personal_site
   kubeStateMetricsEnabled: false
   kubeStateMetricsCore:
     enabled: true
