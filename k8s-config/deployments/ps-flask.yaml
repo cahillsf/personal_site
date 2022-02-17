@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: ps-flask
-        image: cahillsf/ps-flask:0.0.4
+        image: cahillsf/ps-flask:0.0.1
         ports:
         - containerPort: 8000
         env:
@@ -24,4 +24,5 @@ spec:
           valueFrom:
               fieldRef:
                   fieldPath: status.hostIP
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
+        # imagePullPolicy: IfNotPresent
