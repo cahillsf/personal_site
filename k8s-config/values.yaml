@@ -2,6 +2,8 @@ targetSystem: "linux"
 registry: gcr.io/datadoghq
 
 datadog:
+  apm:
+    portEnabled: true
   apiKey: <DATADOG_API_KEY>
   securityContext: {}
   hostVolumeMountPropagation: None
