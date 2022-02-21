@@ -6,6 +6,8 @@ from pprint import pprint
 import sys
 import datetime
 import os
+import requests
+import json
 ### THIS IS THE TRACING BLOCK IN USE IN IMAGE FOR K8S#####
 # import ddtrace.profiling.auto
 # from ddtrace.profiling.profiler import Profiler
@@ -52,6 +54,17 @@ def create_user_obj(input):
     app.logger.info(clean_obj)
     return clean_obj
 
+def validate_response(resp): 
+    print("validating response", file=sys.stderr)
+    print(resp['success'], file=sys.stderr)
+    success = True if resp['success'] == True else False
+    print(success, file=sys.stderr)
+    human = True if resp['score'] > 0.3 else False
+    correct_action = True if resp['action'] == 'formSubmit' else False
+    if (human and correct_action and resp['success']):
+        return "valid"
+    return "invalid"
+
 
 @app.route('/api/cards', methods=['GET'])
 # @app.route(base_url + '/cards', methods=['GET'])
@@ -84,6 +97,17 @@ def testRoute():
     print("test route", file=sys.stderr)
     app.logger.info("test route")
     return "OKAY", 200
+
+@app.route('/api/recaptcha', methods=['POST'])
+def recaptcha():
+    recaptcha_secret= str(os.environ.get('RECAPTCHA_SECRET'))
+    token = request.json['token']
+    app.logger.info("recaptcha")
+    url = 'https://www.google.com/recaptcha/api/siteverify?secret='+ recaptcha_secret + '&response=' + token
+    response = requests.post(url)
+    response_dict = json.loads(response.text)
+    response_assement = validate_response(response_dict)
+    return response_assement, 200
 
 #local deployment
 if __name__ == '__main__':
