@@ -67,4 +67,8 @@ p {
   text-align: left;
   margin: 3%;
 }
+
+div.grecaptcha-badge { 
+  visibility: hidden; 
+}
 </style>
