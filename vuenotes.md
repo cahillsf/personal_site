@@ -24,8 +24,10 @@
 
 ### production build
   * updating all sensitive info for config -- MongodDB users/pws/access, flask userrole and pword -- as envvars
-  * ~writing kube yaml deployment~
+  * writing kube yaml deployment
+  * update how services are accessed within k8s cluster - is it necessary to expose as `NodePort`?
   * ~working AWS K8s config~
+  * assess aws networking/sgs/etc
   * unified service tagging
   * go live
 
