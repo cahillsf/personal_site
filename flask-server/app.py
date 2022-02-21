@@ -7,13 +7,13 @@ import sys
 import datetime
 import os
 ### THIS IS THE TRACING BLOCK IN USE IN IMAGE FOR K8S#####
-import ddtrace.profiling.auto
-from ddtrace.profiling.profiler import Profiler
-from ddtrace import config, patch_all, Pin, patch
-config.env = "dev"      # the environment the application is in
-config.service = "flask-server"  # name of your application
-config.version = "0.0.1"  # version of your application
-patch_all()
+# import ddtrace.profiling.auto
+# from ddtrace.profiling.profiler import Profiler
+# from ddtrace import config, patch_all, Pin, patch
+# config.env = "dev"      # the environment the application is in
+# config.service = "flask-server"  # name of your application
+# config.version = "0.0.1"  # version of your application
+# patch_all()
 ##################
 
 # configuration
@@ -37,11 +37,11 @@ CORS(app, origins=["http://localhost:8080"], headers=['Content-Type'], expose_he
 
 # this is the client connection in the k8s env
 # connecting to ps-mongo-service (k8s-config/services/ps-mongo)
-client = pymongo.MongoClient('mongodb://flask-role:toor@ps-mongo-service:27017/sitecontent?authSource=sitecontent')
+# client = pymongo.MongoClient('mongodb://flask-role:toor@ps-mongo-service:27017/sitecontent?authSource=sitecontent')
 
 # this is the client connection in the docker env
 # connecting to mongodb (container name in docker compose)
-# client = pymongo.MongoClient('mongodb://flask-role:toor@mongodb:27017/sitecontent?authSource=sitecontent')
+client = pymongo.MongoClient('mongodb://flask-role:toor@localhost:27017/sitecontent?authSource=sitecontent')
 
 #use a variable defined in the if name== blocks for client connection
 # client = pymongo.MongoClient('mongodb://flask-role:toor@' + mongo_client + ':27017/sitecontent?authSource=sitecontent')
