@@ -5,6 +5,7 @@
   
 - containerize 
   * ~generate images for kube deployment~
+
 ### MongoDB
   * configure as statefulset - protect against data loss
   
@@ -19,10 +20,13 @@
 
   * ~~hide dropdown menu after user has returned to full page view so that when the browser size is reduced below the breakpoint, it will not be visible~~
 
+  * add CAPTCHA to form submission
+
 ### production build
   * updating all sensitive info for config -- MongodDB users/pws/access, flask userrole and pword -- as envvars
-  * writing kube yaml deployment
+  * ~writing kube yaml deployment~
   * ~working AWS K8s config~
+  * unified service tagging
   * go live
 
 
