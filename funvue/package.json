@@ -17,6 +17,7 @@
     "@vuikit/theme": "^0.8.1",
     "aos": "^2.3.4",
     "axios": "^0.21.1",
+    "debounce": "^1.2.1",
     "three": "^0.128.0",
     "vue": "^2.5.2",
     "vue-pdf-embed": "^1.0.5",
