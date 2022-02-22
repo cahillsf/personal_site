@@ -1,6 +1,5 @@
 <template>
     <div class="toolbarSticky" role="banner">
-        <!-- <div id="logo-name" v-on="onHomePage ? { click: () => navigateToPage('/') } : {}"> -->
         <div id="logo-name" v-on="onHomePage ? { click: () => this.$router.go() } : { click: () => navigateToPage('/') }">
           <img id="logo" src="@/assets/initials.png"/>
           <ul>
@@ -37,6 +36,7 @@
 </template>
 
 <script>
+import { debounce } from "debounce";
 import '@vuikit/theme';
 import { Button, ButtonLink } from '../../node_modules/vuikit/lib/button';
 import { Icon, IconButton } from '../../node_modules/vuikit/lib/icon';
@@ -93,16 +93,15 @@ export default {
   },
   mounted(){
 
-    if(window.innerWidth > 650){
+    if(window.innerWidth > 670){
       this.largeScreenOnLoad = true;
-      // console.log("large screen is " + this.largeScreenOnLoad)
       return;
     }
     this.smallScreenOnLoad = true;
 
   },
   created(){
-    window.addEventListener("resize", this.trackResize);
+    window.addEventListener("resize", debounce(this.triggerTrackResize, 200));
     this.setCurPageClass();
   },
   destroyed(){
@@ -129,14 +128,12 @@ export default {
       console.log("in show dropdown");
       this.dropDisplayed = (this.dropDisplayed ? false : true);
     },
-    trackResize(){
-      if(window.innerWidth >= 650){
+    triggerTrackResize(){
+      if(window.innerWidth >= 670){
         if(this.dropDisplayed){
           this.$refs.sandwichIcon.click();
-          console.log("flipping display");
         }
         if(this.smallScreenOnLoad && this.firstTime){
-          console.log("buttonAnimate = true");
           this.smallScreenOnLoad = false;
           this.firstTime = false;
           this.buttonAnimate = true;
@@ -144,7 +141,6 @@ export default {
         }
       }
       else if(this.largeScreenOnLoad && this.firstTime){
-        console.log("in else if");
         this.largeScreenOnLoad = false;
         this.firstTime = false;
         this.iconAnimate = true;
@@ -293,7 +289,7 @@ export default {
 }
 
 
-@media only screen and (min-width: 650px){
+@media only screen and (min-width: 670px){
   .icon-animate-out{
     animation-duration: 1s; 
     animation-name: icon-animate-out;
@@ -307,7 +303,7 @@ export default {
   
 }
 
-@media only screen and (max-width: 650px){
+@media only screen and (max-width: 670px){
   .menu-button-out{
     animation-duration: 0.7s;
     animation-name: buttons-animate-out;
