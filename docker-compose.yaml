@@ -18,8 +18,6 @@ services:
     #   ports:
     #     - "8126:8126"
     #   restart: on-failure
-    #   depends_on: 
-    #     - mysql_db
     mongodb:
       image: mongo
       environment:
