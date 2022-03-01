@@ -2,6 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ps-vue
+  labels:
+    tags.datadoghq.com/env: "dev"
+    tags.datadoghq.com/service: "ps-vue"
+    tags.datadoghq.com/version: "0.0.1"
 spec:
   selector:
     matchLabels:
@@ -11,19 +15,33 @@ spec:
     metadata:
       labels:
         app: ps-vue
+        tags.datadoghq.com/env: "dev"
+        tags.datadoghq.com/service: "ps-vue"
+        tags.datadoghq.com/version: "0.0.1"
       annotations:
         ad.datadoghq.com/tags: '{"app": "ps-vue","role": "frontend", "library":"vue"}'
+        ad.datadoghq.com/ps-vue.logs: '[{"source":"nginx","service":"ps-vue"}]'
     spec:
       containers:
       - name: ps-vue
-        image: cahillsf/ps-vue:0.0.10
+        # image: cahillsf/ps-vue:0.0.10
+        # image: cahillsf/ps-vue:k8s
+        image: cahillsf/ps-vue:apm
         ports:
         - containerPort: 80
         imagePullPolicy: Always
         env:
+        - name: DD_ENV
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.labels['tags.datadoghq.com/env']
         - name: DD_PS_APP_ID
           value: "199c6858-0b0b-4b4a-a64f-f0fc03b3cce2"
         - name: DD_PS_CLIENT_TOKEN
           value: "pubac01816ac2c0ab0ee753e75c83cc5946"
         - name: DEPLOYMENT
           value: "kubernetes"
+        - name: DD_AGENT_HOST
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
