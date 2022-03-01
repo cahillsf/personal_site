@@ -10,7 +10,7 @@
   * configure as statefulset - protect against data loss
   
 ### VUE
-- debounce window resize event listener
+- ~debounce window resize event listener~
 - style
   * fix up dropdown menu
   * add breakpoint for large screens (increase grid-row gap?  maybe add some rows?)-- so bottom bar is always at bottom -- maybe there's an easier fix here....
@@ -20,12 +20,12 @@
 
   * ~~hide dropdown menu after user has returned to full page view so that when the browser size is reduced below the breakpoint, it will not be visible~~
 
-  * add CAPTCHA to form submission
+  * ~add CAPTCHA to form submission~
 
 ### production build
   * updating all sensitive info for config -- MongodDB users/pws/access, flask userrole and pword -- as envvars
-  * writing kube yaml deployment
-  * update how services are accessed within k8s cluster - is it necessary to expose as `NodePort`?
+  * ~writing kube yaml deployment~
+  * ~update how services are accessed within k8s cluster - is it necessary to expose as `NodePort`?~ NO
   * ~working AWS K8s config~
   * assess aws networking/sgs/etc
   * unified service tagging
@@ -134,11 +134,10 @@ Push the image to your Docker Hub using the following command: `docker image pus
 Log in to Docker Hub to find your published image
 
 docker build -t ps-vue:0.0.1 .
+docker build -f Dockerfiledev -t ps-vue:test .
 
-docker build -f Dockerfiledev -t ps-vue-dev:0.0.6 .
-
-docker image tag ps-flask:0.0.1 cahillsf/ps-flask:0.0.1
-docker image push cahillsf/ps-flask:0.0.1
+docker image tag ps-vue:apm cahillsf/ps-vue:apm
+docker image push cahillsf/ps-vue:apm
 
 from vue container
 apk --no-cache add curl
@@ -157,3 +156,13 @@ need to make sure the mongodb connection uri workss
 
 look for this in style sheet
 /*cahill steve custom theme here comment*/
+
+./docker_push.sh -t k8s -r cahillsf -i ps-vue -p ./funvue
+./docker_push.sh -t k8s -r cahillsf -i ps-mongo -p ./mongo-db
+./docker_push.sh -t k8s -r cahillsf -i ps-flask -p ./flask-server
+
+
+curl -d "secret=<SECRET>&response=<RESPONSE_TOKEN>" -X POST https://www.google.com/recaptcha/api/siteverify
+
+
+docker compose -f docker-compose-fromfile.yml up --build 
