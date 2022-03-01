@@ -35,7 +35,7 @@ datadog:
   logs:
     enabled: true
     containerCollectAll: true
-    containerCollectUsingFiles: true
+    containerCollectUsingFiles: false
   env: 
     - name: DD_ENV
       value: dev
@@ -43,6 +43,10 @@ datadog:
       valueFrom:
         fieldRef:
           fieldPath: spec.nodeName
+    # - name: DD_CONTAINER_EXCLUDE_LOGS
+    #   value: image:.*
+    # - name: DD_CONTAINER_INCLUDE_LOGS
+    #   value: image:cahillsf/ps-flask
   processAgent:
     enabled: true
     processCollection: true
