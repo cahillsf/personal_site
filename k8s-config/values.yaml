@@ -48,4 +48,4 @@ datadog:
     processCollection: true
 agents:
   image:
-    tag: 7-jmx
+    tag: latest-jmx
