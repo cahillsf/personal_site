@@ -15,3 +15,6 @@ class dockerConfig(Config):
 
 class kubernetesConfig(Config):
     DB_SERVER = 'ps-mongo-service'
+
+class headlessConfig(Config):
+    DB_SERVER = 'mongodb-service'
