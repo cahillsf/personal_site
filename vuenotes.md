@@ -134,10 +134,12 @@ Push the image to your Docker Hub using the following command: `docker image pus
 Log in to Docker Hub to find your published image
 
 docker build -t ps-vue:0.0.1 .
-docker build -f Dockerfiledev -t ps-vue:test .
+docker build -f Dockerfile-ss -t ps-vue:test .
+
+docker image tag ps-mongo:ss cahillsf/ps-mongo:ss
 
 docker image tag ps-vue:apm cahillsf/ps-vue:apm
-docker image push cahillsf/ps-vue:apm
+docker image push cahillsf/ps-mongo:ss
 
 from vue container
 apk --no-cache add curl
@@ -166,3 +168,17 @@ curl -d "secret=<SECRET>&response=<RESPONSE_TOKEN>" -X POST https://www.google.c
 
 
 docker compose -f docker-compose-fromfile.yml up --build 
+
+
+#mongo 
+rs.initiate({ _id: "MainRepSet", version: 1, 
+members: [ 
+ { _id: 0, host: "mongod-0.mongodb-service.default.svc.cluster.local:27017" } ]});
+
+ rs.status();
+
+ mongo localhost:27017/test populate_db.sh
+
+ mongoimport --type csv -d sitecontent -c cards --headerline /docker-entrypoint-initdb.d/homepage.csv 
+
+ mongoimport --type csv -d sitecontent -c users --headerline /docker-entrypoint-initdb.d/users.csv
