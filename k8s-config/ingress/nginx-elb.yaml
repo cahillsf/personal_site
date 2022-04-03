@@ -297,9 +297,6 @@ spec:
       port: 443
       protocol: TCP
       targetPort: special
-      # targetPort: https
-      # appProtocol: https
-
   selector:
     app.kubernetes.io/name: ingress-nginx
     app.kubernetes.io/instance: ingress-nginx

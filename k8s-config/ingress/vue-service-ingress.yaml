@@ -10,14 +10,7 @@ metadata:
       if ( $server_port = 80 ) {
          return 308 https://$host$request_uri;
       }
-    # nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
-    # nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
 spec:
-  # tls:
-  # - hosts:
-  #     - dev.stephencahill.net
-  #   secretName: tls
-  # ingressClassName: nginx
   rules:
     - host: dev.stephencahill.net
       http:
