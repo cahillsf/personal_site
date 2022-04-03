@@ -13,7 +13,8 @@ spec:
       - dev.stephencahill.net
     secretName: tls
   rules:
-    - http:
+    - host: dev.stephencahill.net
+      http:
         paths:
           - path: /
             pathType: Prefix
