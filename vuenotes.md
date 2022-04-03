@@ -155,3 +155,34 @@ need to make sure the mongodb connection uri workss
 
 look for this in style sheet
 /*cahill steve custom theme here comment*/
+
+./docker_push.sh -t k8s -r cahillsf -i ps-vue -p ./funvue
+./docker_push.sh -t k8s -r cahillsf -i ps-mongo -p ./mongo-db
+./docker_push.sh -t k8s -r cahillsf -i ps-flask -p ./flask-server
+
+
+curl -d "secret=<SECRET>&response=<RESPONSE_TOKEN>" -X POST https://www.google.com/recaptcha/api/siteverify
+
+
+docker compose -f docker-compose-fromfile.yml up --build 
+
+
+#mongo 
+rs.initiate({ _id: "MainRepSet", version: 1, 
+members: [ 
+ { _id: 0, host: "mongod-0.mongodb-service.default.svc.cluster.local:27017" } ]});
+
+ rs.status();
+
+ mongo localhost:27017/test populate_db.sh
+
+ mongoimport --type csv -d sitecontent -c cards --headerline /docker-entrypoint-initdb.d/homepage.csv 
+
+ mongoimport --type csv -d sitecontent -c users --headerline /docker-entrypoint-initdb.d/users.csv
+
+
+### MongoDB Operato
+
+kubectl create namespace mongodb
+
+kubectl create secret generic my-mongodb-user-password -n mongodb --from-literal="password=TXs3ZsuIqT-pQFvwxOec"
