@@ -13,6 +13,7 @@ spec:
         app: ps-mongo
       annotations:
         ad.datadoghq.com/tags: '{"app": "ps-mongo","role": "database", "library":"mongodb"}'
+        ad.datadoghq.com/ps-mongo.logs: '[{"source":"mongodb","service":"ps-mongo"}]'
     spec:
       containers:
       - name: ps-mongo
