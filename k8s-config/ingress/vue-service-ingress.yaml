@@ -13,6 +13,7 @@ spec:
   - hosts:
       - dev.stephencahill.net
     secretName: tls
+  ingressClassName: nginx
   rules:
     - host: dev.stephencahill.net
     - http:
