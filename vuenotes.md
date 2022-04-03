@@ -27,6 +27,7 @@
   * ~writing kube yaml deployment~
   * ~update how services are accessed within k8s cluster - is it necessary to expose as `NodePort`?~ NO
   * ~working AWS K8s config~
+  * https encryption - (in progress)
   * assess aws networking/sgs/etc
   * unified service tagging
   * go live
@@ -165,4 +166,29 @@ look for this in style sheet
 curl -d "secret=<SECRET>&response=<RESPONSE_TOKEN>" -X POST https://www.google.com/recaptcha/api/siteverify
 
 
+
 docker compose -f docker-compose-fromfile.yml up --build 
+
+
+#mongo 
+rs.initiate({ _id: "MainRepSet", version: 1, 
+members: [ 
+ { _id: 0, host: "mongod-0.mongodb-service.default.svc.cluster.local:27017" } ]});
+
+ rs.status();
+
+ mongo localhost:27017/test populate_db.sh
+
+ mongoimport --type csv -d sitecontent -c cards --headerline /docker-entrypoint-initdb.d/homepage.csv 
+
+ mongoimport --type csv -d sitecontent -c users --headerline /docker-entrypoint-initdb.d/users.csv
+
+
+### MongoDB Operato
+
+kubectl create namespace mongodb
+
+kubectl create secret generic my-mongodb-user-password -n mongodb --from-literal="password=TXs3ZsuIqT-pQFvwxOec"
+
+docker compose -f docker-compose-fromfile.yml up --build 
+
