@@ -20,7 +20,7 @@ spec:
   ingressClassName: nginx
   rules:
     - host: dev.stephencahill.net
-    - http:
+      http:
         paths:
           - path: /
             pathType: Prefix
