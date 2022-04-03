@@ -9,13 +9,13 @@ metadata:
     # nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
     # nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
 spec:
-  tls:
-  - hosts:
-      - dev.stephencahill.net
-    secretName: tls
+  # tls:
+  # - hosts:
+  #     - dev.stephencahill.net
+  #   secretName: tls
   rules:
-    - host: dev.stephencahill.net
-      http:
+    # - host: dev.stephencahill.net
+    - http:
         paths:
           - path: /
             pathType: Prefix
