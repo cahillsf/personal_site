@@ -27,6 +27,7 @@
   * ~writing kube yaml deployment~
   * ~update how services are accessed within k8s cluster - is it necessary to expose as `NodePort`?~ NO
   * ~working AWS K8s config~
+  * https encryption - (in progress)
   * assess aws networking/sgs/etc
   * unified service tagging
   * go live
@@ -182,3 +183,13 @@ members: [
  mongoimport --type csv -d sitecontent -c cards --headerline /docker-entrypoint-initdb.d/homepage.csv 
 
  mongoimport --type csv -d sitecontent -c users --headerline /docker-entrypoint-initdb.d/users.csv
+
+
+### MongoDB Operato
+
+kubectl create namespace mongodb
+
+kubectl create secret generic my-mongodb-user-password -n mongodb --from-literal="password=TXs3ZsuIqT-pQFvwxOec"
+
+docker compose -f docker-compose-fromfile.yml up --build 
+
