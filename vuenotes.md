@@ -26,6 +26,7 @@
   * updating all sensitive info for config -- MongodDB users/pws/access, flask userrole and pword -- as envvars
   * ~writing kube yaml deployment~
   * ~working AWS K8s config~
+  * https encryption - (in progress)
   * unified service tagging
   * go live
 
