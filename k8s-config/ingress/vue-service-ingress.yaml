@@ -8,6 +8,10 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
     
 spec:
+  tls:
+  - hosts:
+      - dev.stephencahill.net
+    secretName: tls
   rules:
     - http:
         paths:
