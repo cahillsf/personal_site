@@ -6,10 +6,14 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/rewrite-target: /
-    
+    nginx.ingress.kubernetes.io/server-snippet: |
+      if ( $server_port = 80 ) {
+         return 308 https://$host$request_uri;
+      }
 spec:
   rules:
-    - http:
+    - host: dev.stephencahill.net
+      http:
         paths:
           - path: /
             pathType: Prefix
