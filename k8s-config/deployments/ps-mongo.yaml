@@ -20,4 +20,5 @@ spec:
         image: cahillsf/ps-mongo:0.0.1
         ports:
         - containerPort: 27017
-        imagePullPolicy: IfNotPresent
+        # imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
