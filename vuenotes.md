@@ -20,7 +20,7 @@
 
   * ~~hide dropdown menu after user has returned to full page view so that when the browser size is reduced below the breakpoint, it will not be visible~~
 
-  * ~add CAPTCHA to form submission~
+  * ~add CAPTCHA to form submission~: captcha admin: https://www.google.com/recaptcha/admin/site/512912889
 
 ### production build
   * updating all sensitive info for config -- MongodDB users/pws/access, flask userrole and pword -- as envvars
@@ -31,7 +31,7 @@
   * assess aws networking/sgs/etc
   * unified service tagging
   * go live
-
+  * Merging to `adding_k8s_config` to `staging` is default-ssl-certificate needed in the `ingress-nginx-controller` command args in `nginx-elb.yaml` (https://a.cl.ly/04uExqo6)
 
 
 
@@ -193,3 +193,6 @@ kubectl create secret generic my-mongodb-user-password -n mongodb --from-literal
 
 docker compose -f docker-compose-fromfile.yml up --build 
 
+kubectl port-forward service/ps-vue-service 80:80
+
+ kubectl patch svc ps-vue-service -p '{"spec":{"externalIPs":["127.0.0.1"]}}'
