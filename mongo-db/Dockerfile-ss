@@ -1,0 +1,10 @@
+FROM mongo
+COPY ./mongo-db-init-files /docker-entrypoint-initdb.d
+COPY ./mongo-db-init-files /data/db/scripts
+COPY ./replset_init ./
+RUN chmod +x replset_init.sh
+# RUN mongod
+ENV MONGO_INITDB_ROOT_USERNAME root
+ENV MONGO_INITDB_ROOT_PASSWORD example
+EXPOSE 27017
+# CMD ["/bin/sh"]
