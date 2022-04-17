@@ -14,6 +14,9 @@ spec:
         role: mongo
         environment: test
         replicaset: MainRepSet
+      annotations:
+        ad.datadoghq.com/tags: '{"app": "ps-mongo","role": "database", "library":"mongodb"}'
+        ad.datadoghq.com/ps-mongo.logs: '[{"source":"mongodb","service":"ps-mongo"}]'
     spec:
       terminationGracePeriodSeconds: 10
       volumes:
