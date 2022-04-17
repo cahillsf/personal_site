@@ -16,9 +16,16 @@ spec:
         replicaset: MainRepSet
     spec:
       terminationGracePeriodSeconds: 10
+      volumes:
+        - name: secret-volume
+          secret:
+            secretName: shared-bootstrap-data
+            defaultMode: 256
       containers:
         - name: mongod-container
-          image: cahillsf/ps-mongo:ss
+          # image: cahillsf/ps-mongo:ss
+          image: cahillsf/ps-mongo:ss2
+          # image: mongo
           imagePullPolicy: Always
           ports:
             - containerPort: 27017
@@ -28,11 +35,21 @@ spec:
             - "0.0.0.0"
             - "--replSet"
             - "MainRepSet"
+            - "--auth"
+            - "--clusterAuthMode"
+            - "keyFile"
+            - "--keyFile"
+            - "/etc/secret-volume/internal-auth-mongodb-keyfile"
+            - "--setParameter"
+            - "authenticationMechanisms=SCRAM-SHA-1"
           resources:
             requests:
               cpu: 0.2
               memory: 200Mi
           volumeMounts:
+            - name: secret-volume
+              readOnly: true
+              mountPath: /etc/secret-volume
             - name: mongodb-persistent-storage-claim
               mountPath: /data/db
   volumeClaimTemplates:
