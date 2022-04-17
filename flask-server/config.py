@@ -5,6 +5,8 @@ class Config(object):
 
     @property
     def DATABASE_URI(self):  # Note: all caps
+        if self.DB_SERVER == 'mongod-0.mongodb-service.default.svc.cluster.local:27017':
+            return f"mongodb://flask-role:toor@{self.DB_SERVER}/sitecontent?authSource=sitecontent&replicaSet=MainRepSet"
         return f"mongodb://flask-role:toor@{self.DB_SERVER}:27017/sitecontent?authSource=sitecontent"
 
 class localConfig(Config):
@@ -18,3 +20,6 @@ class kubernetesConfig(Config):
 
 class headlessConfig(Config):
     DB_SERVER = 'mongodb-service'
+
+class headlessConfigMultiConnectConfig(Config):
+    DB_SERVER = 'mongod-0.mongodb-service.default.svc.cluster.local:27017'
