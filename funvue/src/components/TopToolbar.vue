@@ -43,7 +43,6 @@ import { Icon, IconButton } from '../../node_modules/vuikit/lib/icon';
 import { IconMenu } from '@vuikit/icons';
 import { Drop } from '../../node_modules/vuikit/lib/drop';
 import { NavbarNavItem, NavbarNavDropdownNav } from '../../node_modules/vuikit/lib/navbar';
-var counter = 0;
 export default {
   name: 'TopToolbar',
   components: {
@@ -123,9 +122,7 @@ export default {
       this.msg= 'TopToolbar!;'
     },
     showDropdown(){
-      counter += 1;
-      this.activeBurger = (counter % 2 != 0? true : false)
-      console.log("in show dropdown");
+      this.activeBurger = (this.dropDisplayed ? false : true)
       this.dropDisplayed = (this.dropDisplayed ? false : true);
     },
     triggerTrackResize(){
@@ -318,7 +315,7 @@ export default {
 
   #nav-dropdown{
     position: absolute;
-    background: #1e87f0;
+    background: #6e9db3;
     right: 0px;
     top: 55px;
   }
