@@ -33,8 +33,16 @@ export default {
 
 <style>
 @import '../node_modules/aos/dist/aos.css';
+@font-face {
+  font-family: "Playfair";
+  src: url(assets/fonts/PlayfairDisplay-Regular.ttf) format ("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  /* font-family: 'Avenir', Helvetica, Arial, sans-serif; */
+  font-family: "Playfair", Times, serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
