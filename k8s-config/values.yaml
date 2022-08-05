@@ -1,5 +1,6 @@
 targetSystem: "linux"
 registry: gcr.io/datadoghq
+# registry: registry.hub.docker.com/
 
 datadog:
   apm:
@@ -12,13 +13,44 @@ datadog:
   kubeStateMetricsEnabled: false
   kubeStateMetricsCore:
     enabled: true
+    labelsAsTags:
+      pod:
+        cahillsf_com_testing: cahillsf_testing
+  nodeLabelsAsTags:
+    cahillsf: cahillsf
   kubelet:
     host:
       valueFrom:
         fieldRef:
           fieldPath: status.hostIP
     tlsVerify: false
-    
+  ignoreAutoConfig:
+  - etcd
+  - kube_scheduler
+  - kube_controller_manager
+  confd:
+    etcd.yaml: |-
+      ad_identifiers:
+        - etcd
+      instances:
+        - prometheus_url: https://%%host%%:2379/metrics
+          tls_ca_cert: /host/etc/kubernetes/pki/etcd/ca.crt
+          tls_cert: /host/etc/kubernetes/pki/etcd/server.crt
+          tls_private_key: /host/etc/kubernetes/pki/etcd/server.key
+    kube_scheduler.yaml: |-
+      ad_identifiers:
+        - kube-scheduler
+      instances:
+        - prometheus_url: https://%%host%%:10259/metrics
+          ssl_verify: false
+          bearer_token_auth: true
+    kube_controller_manager.yaml: |-
+      ad_identifiers:
+        - kube-controller-manager
+      instances:
+        - prometheus_url: https://%%host%%:10257/metrics
+          ssl_verify: false
+          bearer_token_auth: true
   dogstatsd:
     port: 8125
     originDetection: true
@@ -47,9 +79,27 @@ datadog:
     #   value: image:.*
     # - name: DD_CONTAINER_INCLUDE_LOGS
     #   value: image:cahillsf/ps-flask
+    - name: DD_DOCKER_ENV_AS_TAGS
+      value: '{"testing": "testing_key","PYTHON_VERSION": "python_v"}'
+    - name: testing
+      value: helloworld
+    - name: PYTHON_VERSION
+      value: t666
   processAgent:
     enabled: true
     processCollection: true
 agents:
   image:
-    tag: latest-jmx
+    tag: 7-jmx
+  volumes:
+    - hostPath:
+        path: /etc/kubernetes/pki/etcd
+      name: etcd-certs
+  volumeMounts:
+    - name: etcd-certs
+      mountPath: /host/etc/kubernetes/pki/etcd
+      readOnly: true
+  tolerations:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/master
+    operator: Exists
