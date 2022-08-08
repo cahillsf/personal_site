@@ -10,6 +10,8 @@ metadata:
       if ( $server_port = 80 ) {
          return 308 https://$host$request_uri;
       }
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+            opentracing_tag "service.name" "dev-site-ingress";
 spec:
   rules:
     - host: dev.stephencahill.net
