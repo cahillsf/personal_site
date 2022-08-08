@@ -38,6 +38,8 @@ metadata:
   namespace: ingress-nginx
 data:
   allow-snippet-annotations: 'true'
+  enable-opentracing: "true"
+  datadog-collector-host: $HOST_IP
   ssl-redirect: 'false'
   server-snippet: |
       listen 8000;
@@ -358,6 +360,10 @@ spec:
             runAsUser: 101
             allowPrivilegeEscalation: true
           env:
+            - name: HOST_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
             - name: POD_NAME
               valueFrom:
                 fieldRef:
