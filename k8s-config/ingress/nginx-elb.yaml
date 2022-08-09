@@ -40,6 +40,7 @@ data:
   allow-snippet-annotations: 'true'
   enable-opentracing: "true"
   datadog-collector-host: $HOST_IP
+  datadog-service-name: "nginx-ingress"
   ssl-redirect: 'false'
   server-snippet: |
       listen 8000;
