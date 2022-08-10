@@ -36,14 +36,14 @@ echo
 
 # # Initiate MongoDB Replica Set configuration
 echo "Configuring the db initialization"
-kubectl exec mongod-0 -c mongod-container -- mongosh --username main_admin --password example /usr/scripts/init2.js
+kubectl exec mongod-0 -c mongod-container -- mongosh --username main_admin --password $MONGO_PASS /usr/scripts/init2.js
 echo "done initializing"
 
 echo "Populating homepage collection"
-kubectl exec mongod-0 -c mongod-container -- mongoimport -u "main_admin" -p "example" --type csv --authenticationDatabase admin -d sitecontent -c cards --headerline /usr/scripts/homepage.csv
+kubectl exec mongod-0 -c mongod-container -- mongoimport -u "main_admin" -p $MONGO_PASS --type csv --authenticationDatabase admin -d sitecontent -c cards --headerline /usr/scripts/homepage.csv
 echo "Finished populating db"
 
 echo "populating users collection"
-kubectl exec mongod-0 -c mongod-container -- mongoimport -u "main_admin" -p "example" --type csv --authenticationDatabase admin -d sitecontent -c users --headerline /usr/scripts/users.csv
+kubectl exec mongod-0 -c mongod-container -- mongoimport -u "main_admin" -p $MONGO_PASS --type csv --authenticationDatabase admin -d sitecontent -c users --headerline /usr/scripts/users.csv
 echo "finished populating users collection"
 
