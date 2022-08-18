@@ -9,14 +9,15 @@ import os
 import requests
 import json
 import werkzeug
-### THIS IS THE TRACING BLOCK IN USE IN IMAGE FOR K8S#####
-import ddtrace.profiling.auto
+## THIS IS THE TRACING BLOCK IN USE IN IMAGE FOR K8S#####
+# import ddtrace.profiling.auto
 from ddtrace import config, patch_all, Pin, patch, tracer
 config.env = "dev"      # the environment the application is in
 config.service = "flask-server"  # name of your application
 config.version = "0.0.1"  # version of your application
+patch(logging=True)
 patch_all()
-##################
+#################
 
 # configuration
 
@@ -27,6 +28,11 @@ patch_all()
 #     version="0.0.1",   # if not specified, falls back to environment variable DD_VERSION
 # )
 # prof.start()
+
+FORMAT = ('%(asctime)s %(levelname)s [%(name)s] [%(filename)s:%(lineno)d] '
+          '[dd.service=%(dd.service)s dd.env=%(dd.env)s dd.version=%(dd.version)s dd.trace_id=%(dd.trace_id)s dd.span_id=%(dd.span_id)s] '
+          '- %(message)s')
+logging.basicConfig(format=FORMAT)
 
 # instantiate the app
 app = Flask(__name__)
@@ -60,6 +66,8 @@ def create_user_obj(input):
 
 def validate_response(resp): 
     print("validating response", file=sys.stderr)
+    app.logger.info("response is " + str(resp))
+    print("response is " + str(resp), file=sys.stderr)
     print(resp['success'], file=sys.stderr)
     success = True if resp['success'] == True else False
     print(success, file=sys.stderr)
@@ -118,6 +126,8 @@ def recaptcha():
 #local deployment
 if __name__ == '__main__':
     app.run(host="localhost", port=8000, debug=True)
+    log = logging.getLogger(__name__)
+    log.level = logging.DEBUG
 
 #k8s deployment using gunicorn
 if __name__ != '__main__':
