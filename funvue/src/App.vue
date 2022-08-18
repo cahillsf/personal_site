@@ -21,11 +21,13 @@ export default {
           clientToken: window.VUE_APP_DD_CLIENT_TOKEN,
           site: 'datadoghq.com',
           service:'vue-app',
+          env: 'dev',
           // Specify a version number to identify the deployed version of your application in Datadog 
           version: '1.0.0',
           sampleRate: 100,
+          premiumSampleRate: 100,
           trackInteractions: true,
-          allowedTracingOrigins:["http://localhost:8000"]
+          allowedTracingOrigins:["http://localhost:8000", /https:\/\/.*\.stephencahill\.net/]
         });
   }
 }
