@@ -12,8 +12,10 @@
 ### VUE
 - ~debounce window resize event listener~
 - style
-  * fix up dropdown menu
+  * ~fix up dropdown menu~
   * add breakpoint for large screens (increase grid-row gap?  maybe add some rows?)-- so bottom bar is always at bottom -- maybe there's an easier fix here....
+  * full size cards for smaller screens
+  * make it clearer that buttons are clickable
   * ~~copy in custom style sheet~~
   * ~~better routing--> can i create a router-link within a different element?~~
   * ~~styling-- figure out a way to keep theming (currently in nodemodules which are in the .gitignore)~~
@@ -27,8 +29,9 @@
   * ~writing kube yaml deployment~
   * ~update how services are accessed within k8s cluster - is it necessary to expose as `NodePort`?~ NO
   * ~working AWS K8s config~
-  * https encryption - (in progress)
+  * ~https encryption - (in progress)~
   * assess aws networking/sgs/etc
+  * sourcemap upload in `docker_entrypoint_apm.sh`
   * unified service tagging
   * go live
   * Merging to `adding_k8s_config` to `staging` is default-ssl-certificate needed in the `ingress-nginx-controller` command args in `nginx-elb.yaml` (https://a.cl.ly/04uExqo6)
@@ -139,13 +142,13 @@ Tag the image with the following command: `docker image tag <IMAGE_NAME> <DOCKER
 Push the image to your Docker Hub using the following command: `docker image push <DOCKER_USERNAME>/<IMAGE_NAME>:<TAG>`
 Log in to Docker Hub to find your published image
 
-docker build -t ps-vue:0.0.1 .
+docker build -f Dockerfile-apm -t ps-vue:k8s-0.0.1 .
 docker build -f Dockerfile-ss2 -t ps-mongo:ss2 .
 
-docker image tag ps-mongo:ss2 cahillsf/ps-mongo:ss2
+docker image tag ps-vue:k8s-0.0.1 cahillsf/ps-vue:k8s-0.0.1
 
 docker image tag ps-vue:apm cahillsf/ps-vue:apm
-docker image push cahillsf/ps-mongo:ss2
+docker image push cahillsf/ps-vue:k8s-0.0.1
 
 from vue container
 apk --no-cache add curl
@@ -179,6 +182,9 @@ docker compose -f docker-compose-fromfile.yml up --build
 ### This is the bash script to initialize the ReplicaSet once the StatefulSet has been deployed
 
 ./mongod_init_script.sh <ROOT_PASSWORD>
+
+* should have the PV be a XFS formatted volume: https://www.mongodb.com/docs/manual/administration/production-notes/#mongodb-on-linux
+  - https://devopscube.com/mount-ebs-volume-ec2-instance/
 
 ### MongoDB Operato
 
