@@ -18,7 +18,7 @@ spec:
       containers:
       - name: ps-flask
         # image: cahillsf/ps-flask:0.0.1
-        image: cahillsf/ps-flask:k8s
+        image: cahillsf/ps-flask:k8s-logger
         ports:
         - containerPort: 8000
         env:
