@@ -1,7 +1,7 @@
 ## TO DO
 
 - make sure DD instrumentation works
-  * ~passing in RUM envvars to Vue -in k8s~
+  * ~~passing in RUM envvars to Vue -in k8s~~
   
 - containerize 
   * ~generate images for kube deployment~
@@ -10,9 +10,12 @@
   * configure as statefulset - protect against data loss
   
 ### VUE
-- ~debounce window resize event listener~
+- ~~debounce window resize event listener~~
 - style
-  * ~fix up dropdown menu~
+  * fix up dropdown menu
+    - if you are on page and select page from dropdown - do something (i.e. collapse the menu)
+    - make menu within menu for projects
+    - adjust for full size page button as well (remove any click responsne styling to make it clear to the user they are already at the selected page)
   * add breakpoint for large screens (increase grid-row gap?  maybe add some rows?)-- so bottom bar is always at bottom -- maybe there's an easier fix here....
   * full size cards for smaller screens
   * make it clearer that buttons are clickable
@@ -22,7 +25,7 @@
 
   * ~~hide dropdown menu after user has returned to full page view so that when the browser size is reduced below the breakpoint, it will not be visible~~
 
-  * ~add CAPTCHA to form submission~: captcha admin: https://www.google.com/recaptcha/admin/site/512912889
+  * ~~add CAPTCHA to form submission~: captcha admin: https://www.google.com/recaptcha/admin/site/512912889~~
 
 ### production build
   * updating all sensitive info for config -- MongodDB users/pws/access, flask userrole and pword -- as envvars
