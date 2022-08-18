@@ -26,7 +26,7 @@ spec:
       - name: ps-vue
         # image: cahillsf/ps-vue:0.0.10
         # image: cahillsf/ps-vue:k8s
-        image: cahillsf/ps-vue:apm
+        image: cahillsf/ps-vue:k8s-0.0.1
         ports:
         - containerPort: 80
         imagePullPolicy: Always
