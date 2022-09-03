@@ -4,7 +4,7 @@
   * ~~passing in RUM envvars to Vue -in k8s~~
   
 - containerize 
-  * ~generate images for kube deployment~
+  * ~~generate images for kube deployment~~
 
 ### MongoDB
   * configure as statefulset - protect against data loss
@@ -29,15 +29,16 @@
 
 ### production build
   * updating all sensitive info for config -- MongodDB users/pws/access, flask userrole and pword -- as envvars
-  * ~writing kube yaml deployment~
-  * ~update how services are accessed within k8s cluster - is it necessary to expose as `NodePort`?~ NO
-  * ~working AWS K8s config~
-  * ~https encryption - (in progress)~
+  * ~~writing kube yaml deployment~~
+  * ~~update how services are accessed within k8s cluster - is it necessary to expose as `NodePort`?~~ NO
+  * ~~working AWS K8s config~~
+  * ~~https encryption - (in progress)~~
   * assess aws networking/sgs/etc
+    - enable access logs for ELB
   * sourcemap upload in `docker_entrypoint_apm.sh`
   * unified service tagging
   * go live
-  * Merging to `adding_k8s_config` to `staging` is default-ssl-certificate needed in the `ingress-nginx-controller` command args in `nginx-elb.yaml` (https://a.cl.ly/04uExqo6)
+  * ~~Merging to `adding_k8s_config` to `staging` is default-ssl-certificate needed in the `ingress-nginx-controller` command args in `nginx-elb.yaml` (https://a.cl.ly/04uExqo6)~~
 
 
 
