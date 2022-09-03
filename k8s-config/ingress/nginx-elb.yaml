@@ -41,6 +41,11 @@ data:
   enable-opentracing: "true"
   datadog-collector-host: $HOST_IP
   datadog-service-name: "nginx-ingress"
+  enable-modsecurity: "true"
+  enable-owasp-modsecurity-crs: "true"
+  modsecurity-snippet: |
+      # Increment this to force nginx to reload the rules when you change the configmap: 1.0.0
+      Include /etc/nginx/owasp-modsecurity-crs/custom/custom-modsecurity.conf
   ssl-redirect: 'false'
   server-snippet: |
       listen 8000;
@@ -412,6 +417,8 @@ spec:
             - name: webhook-cert
               mountPath: /usr/local/certificates/
               readOnly: true
+            - name: modsecurity-config
+              mountPath: /etc/nginx/owasp-modsecurity-crs/custom/
           resources:
             requests:
               cpu: 100m
@@ -424,6 +431,9 @@ spec:
         - name: webhook-cert
           secret:
             secretName: ingress-nginx-admission
+        - name: modsecurity-config
+          configMap:
+            name: modsecurity-config
 ---
 # Source: ingress-nginx/templates/controller-ingressclass.yaml
 # We don't support namespaced ingressClass yet
