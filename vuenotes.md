@@ -29,15 +29,16 @@
 
 ### production build
   * updating all sensitive info for config -- MongodDB users/pws/access, flask userrole and pword -- as envvars
-  * ~writing kube yaml deployment~
-  * ~update how services are accessed within k8s cluster - is it necessary to expose as `NodePort`?~ NO
-  * ~working AWS K8s config~
-  * ~https encryption - (in progress)~
+  * ~~writing kube yaml deployment~~
+  * ~~update how services are accessed within k8s cluster - is it necessary to expose as `NodePort`?~~ NO
+  * ~~working AWS K8s config~~
+  * ~~https encryption - (in progress)~~
   * assess aws networking/sgs/etc
   * sourcemap upload in `docker_entrypoint_apm.sh`
   * unified service tagging
+  * modsecurity - finish honeypot config
   * go live
-  * Merging to `adding_k8s_config` to `staging` is default-ssl-certificate needed in the `ingress-nginx-controller` command args in `nginx-elb.yaml` (https://a.cl.ly/04uExqo6)
+  * ~~Merging to `adding_k8s_config` to `staging` is default-ssl-certificate needed in the `ingress-nginx-controller` command args in `nginx-elb.yaml` (https://a.cl.ly/04uExqo6)~~
 
 
 
