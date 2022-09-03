@@ -16,6 +16,7 @@
     - if you are on page and select page from dropdown - do something (i.e. collapse the menu)
     - make menu within menu for projects
     - adjust for full size page button as well (remove any click responsne styling to make it clear to the user they are already at the selected page)
+    - emit event when toptoolbar mounts to the main page indicating scrren size that generateCards will check to determine colummn prop, then emit event from top toolbar to trigger the resize going forward
   * add breakpoint for large screens (increase grid-row gap?  maybe add some rows?)-- so bottom bar is always at bottom -- maybe there's an easier fix here....
   * full size cards for smaller screens
   * make it clearer that buttons are clickable

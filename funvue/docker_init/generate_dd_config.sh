@@ -1,5 +1,6 @@
 cat <<EOF
 {
+  "environment": "dev",
   "service": "nginx",
   "operation_name_override": "nginx.handle",
   "agent_host": "${DD_AGENT_HOST}",

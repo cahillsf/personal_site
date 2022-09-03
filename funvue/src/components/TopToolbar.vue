@@ -107,6 +107,13 @@ export default {
     window.removeEventListener("resize", this.trackResize);
   },
   methods: {
+    viewSwitch(size) {
+      let sizeInfo = {
+        'size': size,
+        'firstTime': this.firstTime,
+      }
+      this.$emit('viewSwitch', size);
+    },
     setCurPageClass() {
       let pageKeys = Object.keys(this.pages);
       pageKeys.forEach(key => {
@@ -127,6 +134,7 @@ export default {
     },
     triggerTrackResize(){
       if(window.innerWidth >= 670){
+        this.viewSwitch('lg')
         if(this.dropDisplayed){
           this.$refs.sandwichIcon.click();
         }
@@ -136,6 +144,7 @@ export default {
           this.buttonAnimate = true;
           this.iconAnimate = true;
         }
+        return;
       }
       else if(this.largeScreenOnLoad && this.firstTime){
         this.largeScreenOnLoad = false;
@@ -143,6 +152,7 @@ export default {
         this.iconAnimate = true;
         this.buttonAnimate = true;
       }
+      this.viewSwitch('sm');
     },
     testEnv() {
       console.log(window.VUE_APP_DD_APP_ID);

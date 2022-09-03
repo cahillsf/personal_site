@@ -1,6 +1,6 @@
 <template>
 <div>
-  <top-toolbar></top-toolbar>
+  <top-toolbar v-on:viewSwitch="updateCards"></top-toolbar>
   <div class="singleColGrid">
     <!-- <top-toolbar></top-toolbar> -->
     <div id="topText">
@@ -9,7 +9,7 @@
     </div>
     <div id="cardsDiv">
       <!-- loop through cards in js -->
-      <vk-card v-for="card in cards" v-bind:key="card.id" v-bind:style="card.style" :data-aos="card.animation" type="primary" @click="navigateToPage(card.route)" hover>
+      <vk-card v-for="card in cards" class=cards v-bind:key="card.id" v-bind:style="card.style" :data-aos="card.animation" type="primary" @click="navigateToPage(card.route)" hover>
         <vk-card-title>
           {{ card.title }}
         </vk-card-title>
@@ -46,7 +46,8 @@ export default {
         // 'margin-top': '30vh', 
       },
       cards: [],
-      mainCards: []
+      mainCards: [],
+      curSize: ''
       }
     },
     created(){
@@ -108,6 +109,9 @@ export default {
             console.error(error);
           });
       },
+      updateCards(size){
+        console.log("update cards here, size is " + size)
+      },
       // TODO: dynamically assign grid row to footer
       showBottomBar() {
         this.bottomBarProps['display'] = 'grid';
@@ -167,6 +171,14 @@ li {
 h4 {
   text-align: center;
   margin: 3%;
+}
+
+@media only screen and (max-width: 670px){
+  .cards{
+    color: blue;
+    grid-column: 1/3;
+    grid-row: inherit;
+  }
 }
 
 </style>
