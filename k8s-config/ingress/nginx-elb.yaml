@@ -41,6 +41,7 @@ data:
   enable-opentracing: "true"
   datadog-collector-host: $HOST_IP
   datadog-service-name: "nginx-ingress"
+  datadog-environment: "dev"
   enable-modsecurity: "true"
   enable-owasp-modsecurity-crs: "true"
   modsecurity-snippet: |
