@@ -9,16 +9,13 @@ data:
     SecStatusEngine Off
     SecAuditLog /dev/stdout
     SecAuditLogFormat JSON
-    SecAuditEngine RelevantOnly # could be On/Off/RelevantOnly
+    SecAuditEngine On # could be On/Off/RelevantOnly
     # SecDebugLog /dev/stdout
     # SecDebugLogLevel 9 # (1-9, 9 is the max)
     # Avoid sending status information about ModSecurity in response header
     SecStatusEngine Off
     # Send ModSecurity audit logs to the stdout (only for rejected requests)
     # Se https://github.com/kubernetes/ingress-nginx/issues/6438#issuecomment-728955575 and  https://www.nginx.com/blog/modsecurity-logging-and-debugging/
-    SecAuditLog /dev/stdout
-    SecAuditLogFormat JSON
-    SecAuditEngine RelevantOnly # could be On/Off/RelevantOnly
     # SecDebugLog /dev/stdout
     # SecDebugLogLevel 9 # (1-9, 9 is the max)
     # Enable scanning of the request body
@@ -63,7 +60,7 @@ data:
     # Block requests from known-malicious IPs using project honeypot, see https://www.projecthoneypot.org
     #   Blacklist key is retrieved by signing up and requesting in https://www.projecthoneypot.org/httpbl_configure.php
     # Note search-engine crawlers are still enabled as per block_search_ip paramter
-    SecHttpBlKey YOUR_PROJECT_HONEYPOT_BLACKLIST_KEY
+    SecHttpBlKey feyajeidrnrb
     SecAction "id:900500,\
       phase:1,\
       nolog,\
