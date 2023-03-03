@@ -13,19 +13,25 @@ spec:
         app: ps-flask
       annotations:
         ad.datadoghq.com/tags: '{"app": "ps-flask","role": "backend", "library":"python"}'
+        # ad.datadoghq.com/ps-flask.logs: '[{"source":"gunicorn"}]'
         ad.datadoghq.com/ps-flask.logs: '[{"source":"python"}]'
     spec:
       containers:
       - name: ps-flask
-        # image: cahillsf/ps-flask:0.0.1
-        image: cahillsf/ps-flask:k8s-logger
+        image: cahillsf/ps-flask:0.1.0
+        # image: cahillsf/ps-flask:k8s-logger
         ports:
         - containerPort: 8000
         env:
+        - name: testing
+          value: helloflask
         - name: DEPLOYMENT
           value: "kubernetes"
         - name: RECAPTCHA_SECRET
-          value: '<RECAPTCHA_SECRET_V3>'
+          valueFrom:
+            secretKeyRef:
+              name: recaptcha
+              key: recaptcha-secret
         - name: DD_LOGS_INJECTION
           value: 'true'
         - name: DD_AGENT_HOST
