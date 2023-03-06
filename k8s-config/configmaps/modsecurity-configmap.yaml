@@ -5,7 +5,7 @@ metadata:
   namespace: ingress-nginx
 data:
   custom-modsecurity.conf: |    
-    SecRuleEngine DetectionOnly
+    SecRuleEngine On
     SecStatusEngine Off
     SecAuditLog /dev/stdout
     SecAuditLogFormat JSON
