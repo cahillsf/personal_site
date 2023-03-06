@@ -174,7 +174,7 @@ look for this in style sheet
 
 ./docker_push.sh -t k8s -r cahillsf -i ps-vue -p ./funvue
 ./docker_push.sh -t k8s -r cahillsf -i ps-mongo -p ./mongo-db
-./docker_push.sh -t k8s -r cahillsf -i ps-flask -p ./flask-server
+./docker_push.sh -t 0.1.0 -r cahillsf -i ps-flask -p ./flask-server
 
 
 curl -d "secret=<SECRET>&response=<RESPONSE_TOKEN>" -X POST https://www.google.com/recaptcha/api/siteverify
@@ -201,3 +201,9 @@ docker compose -f docker-compose-fromfile.yml up --build
 kubectl port-forward service/ps-vue-service 80:80
 
  kubectl patch svc ps-vue-service -p '{"spec":{"externalIPs":["127.0.0.1"]}}'
+
+
+
+## Project honeypot
+
+https://www.projecthoneypot.org/manage_honey_pots.php
