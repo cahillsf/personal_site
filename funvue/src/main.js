@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import './registerServiceWorker'
 
 Vue.config.productionTip = false
 Vue.prototype.$hostname = (window.VUE_APP_BUILD == "kubernetes") ? '/api' : 'http://localhost:8000/api'
