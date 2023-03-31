@@ -65,9 +65,7 @@ def create_user_obj(input):
     return clean_obj
 
 def validate_response(resp): 
-    print("validating response", file=sys.stderr)
-    app.logger.info("response is " + str(resp))
-    print("response is " + str(resp), file=sys.stderr)
+    app.logger.info("validating response" + str(resp))
     print(resp['success'], file=sys.stderr)
     success = True if resp['success'] == True else False
     print(success, file=sys.stderr)
@@ -81,7 +79,7 @@ def validate_response(resp):
 @app.route('/api/cards', methods=['GET'])
 # @app.route(base_url + '/cards', methods=['GET'])
 def all_cards():
-    print("getting cards", file=sys.stderr)
+    app.logger.info("getting cards")
     db = client['sitecontent']
     cards = db.cards
     cards_cursor = cards.find({})
@@ -90,7 +88,6 @@ def all_cards():
     for index, document in enumerate(cards_cursor):
         print(document, file=sys.stderr)
         cards_dict[index] = document
-    # print(type(cards_dict), file=sys.stderr)
     return (cards_dict)
 
 @app.route('/api/createMessage', methods=['POST'])
@@ -115,11 +112,10 @@ def recaptcha():
     print(request.json, file=sys.stderr)
     recaptcha_secret= str(os.environ.get('RECAPTCHA_SECRET'))
     token = request.json['token']
-    app.logger.info("recaptcha")
+    app.logger.info("validating with recaptcha")
     url = 'https://www.google.com/recaptcha/api/siteverify?secret='+ recaptcha_secret + '&response=' + token
     response = requests.post(url)
     response_dict = json.loads(response.text)
-    print(response_dict, file=sys.stderr)
     response_assement = validate_response(response_dict)
     return response_assement, 200
 
