@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ps-mongo
+spec:
+  selector:
+    matchLabels:
+      app: ps-mongo
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ps-mongo
+      annotations:
+        ad.datadoghq.com/tags: '{"app": "ps-mongo","role": "database", "library":"mongodb"}'
+        ad.datadoghq.com/ps-mongo.logs: '[{"source":"mongodb","service":"ps-mongo"}]'
+    spec:
+      containers:
+      - name: ps-mongo
+        image: cahillsf/ps-mongo:0.0.1
+        ports:
+        - containerPort: 27017
+        # imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always

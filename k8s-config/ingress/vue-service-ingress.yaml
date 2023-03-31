@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: vueserver
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/server-snippet: |
+      if ( $server_port = 80 ) {
+         return 308 https://$host$request_uri;
+      }
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+            opentracing_tag "service.name" "dev-site-ingress";
+spec:
+  rules:
+    - host: dev.stephencahill.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ps-vue-service
+                port:
+                  number: 80

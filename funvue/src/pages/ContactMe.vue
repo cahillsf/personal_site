@@ -22,13 +22,20 @@
             <input class="uk-textarea" type="text" placeholder="Enter your message" v-model="messageObj.message">
             <p :style="errorMsg" id="incorrect">Please fill in all fields and ensure a valid email address is used</p>
         </form>
-        <vk-button id="submitButton" @click="submitMessage">Submit</vk-button>
+        <div class="submitDiv">
+            <vk-button id="submitButton" @click="recaptchaVerify">Submit</vk-button>
+        </div>
+        <div class="submitDiv">
+          <br/>
+            <h6>This site is protected by reCAPTCHA and the Google
+          <a href="https://policies.google.com/privacy">Privacy Policy</a> and
+          <a href="https://policies.google.com/terms">Terms of Service</a> apply.</h6>
+        </div>
     </div>
+        
     <vk-notification position="top-center" :messages.sync="messages"></vk-notification>
     <bottom-bar v-bind:style="bottomBarProps"></bottom-bar>
-  </div>
-  
-    
+ </div>    
 </template>
 
 <script>
@@ -66,21 +73,49 @@ export default {
       messages: []
     }
   },
+  mounted() {
+      let recaptchaScript = document.createElement('script')
+      recaptchaScript.setAttribute('src', 'https://www.google.com/recaptcha/api.js?render=6LdvoZIeAAAAAA6Y2rKZYlxaTMA74b6-QScWPuR6')
+      document.head.appendChild(recaptchaScript)
+  },
   methods: {
     sendEmail() {
       window.open("mailto:cahillsf9@gmail.com")
     },
-    async submitMessage(){
-        console.log(JSON.stringify(this.messageObj));
+    async recaptchaVerify(){
+      console.log(JSON.stringify(this.messageObj));
+      var stringMsgObj = JSON.parse(JSON.stringify(this.messageObj));
+      for (var key of Object.keys(stringMsgObj)) {
+          let validEmail = this.verifyEmail(stringMsgObj['email']);
+          if(stringMsgObj[key] === "" || !validEmail){
+            this.emptyInputField();
+            return
+          }
+      }
+      grecaptcha.ready(() => {
+          grecaptcha.execute('6LdvoZIeAAAAAA6Y2rKZYlxaTMA74b6-QScWPuR6', {action: 'formSubmit'}).then((token)=> {
+              console.log(String(token));
+              var stringToken = JSON.parse(JSON.stringify({'token':String(token)}));
+              const path = this.$hostname + '/recaptcha';
+              axios.post(path, stringToken,{withCredentials:true})
+              .then((res) => { 
+                console.log(res.data);
+                if(res.data == 'valid'){this.submitMessage();}
+                else {this.captchaFailed()}
+              })
+              .catch((error) => {
+                // eslint-disable-next-line
+                console.error(error);
+              });
+
+          });
+        });
+    },
+    async submitMessage(stringMsgObj){
         var stringMsgObj = JSON.parse(JSON.stringify(this.messageObj));
-        for (var key of Object.keys(stringMsgObj)) {
-            if(stringMsgObj[key] === ""){
-              this.emptyInputField();
-              return
-            }
-        }
-        const path = 'http://localhost:8000/createMessage';
-        const response = await axios.post(path, stringMsgObj,{withCredentials:true})
+        const path = this.$hostname + '/createMessage';
+        // const path = 'http://localhost:8000/createMessage';
+        await axios.post(path, stringMsgObj,{withCredentials:true})
           .then((res) => { 
             // console.log(res);
             this.successfulSubmission();
@@ -93,8 +128,23 @@ export default {
     emptyInputField() {
         this.errorMsg.display = 'inline';
     },
+    verifyEmail(email) {
+      if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)){return true;} 
+      return false;
+
+    },
     successfulSubmission() {
         this.messages.push({message:'Your message has been sent successfully.  Thanks for reaching out!', status:'success'})
+        let keys = Object.keys(this.messageObj);
+        keys.forEach(key => {
+          this.messageObj[key] = '';
+        })
+        if (this.errorMsg.display == 'inline'){
+          this.errorMsg.display = 'none';
+        }
+    },
+    captchaFailed() {
+      this.messages.push({message:'Captcha challenge failed', status:'Warning'})
         let keys = Object.keys(this.messageObj);
         keys.forEach(key => {
           this.messageObj[key] = '';
@@ -190,11 +240,13 @@ input{
     margin-top: 20px;
 }
 
+.submitDiv{
+  grid-column: 2;
+}
 @media only screen and (max-width: 650px){
     #mainDiv{
       grid-template-columns: 0.05fr 0.9fr 0.05fr;
     }
 }
-
 
 </style>

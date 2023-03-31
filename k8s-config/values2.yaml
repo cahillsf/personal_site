@@ -1,0 +1,78 @@
+targetSystem: "linux"
+registry: gcr.io/datadoghq
+# registry: docker.io/cahillsf
+
+# clusterAgent:
+#   image:
+#     name: dd-cluster-agent
+#     tag: 1.21.0
+#     pullPolicy: Always
+datadog:
+  apm:
+    portEnabled: true
+  apiKey: <DATADOG_API_KEY>
+  securityContext: {}
+  hostVolumeMountPropagation: None
+  logLevel: DEBUG
+  clusterName: personal-site
+  kubeStateMetricsEnabled: false
+  kubeStateMetricsCore:
+    enabled: true
+    labelsAsTags:
+      pod:
+        cahillsf.com/testing: cahillsf_testing
+        cahillsf.com/test_ing: test
+        notcahill.com/not_test: heythere
+        notcahill.com/not_test-pls: dashisunderscore
+        notcahill.com/not_test_nothanks: underscore
+  nodeLabelsAsTags:
+    node-role: node-role-sc
+  kubelet:
+    host:
+      valueFrom:
+        fieldRef:
+          fieldPath: status.hostIP
+    tlsVerify: false
+  dogstatsd:
+    port: 8125
+    originDetection: true
+    tags: []
+    tagCardinality: high
+    useSocketVolume: true
+    socketPath: /var/run/datadogs1/dsd.socket
+    hostSocketPath: /var/run/datadogs1/
+    useHostPort: true
+    useHostPID: true
+    nonLocalTraffic: true
+  collectEvents: true
+  leaderElection: true
+  logs:
+    enabled: true
+    containerCollectAll: true
+    containerCollectUsingFiles: false
+  env: 
+    - name: DD_ENV
+      value: dev
+    - name: DD_HOSTNAME
+      valueFrom:
+        fieldRef:
+          fieldPath: spec.nodeName
+    # - name: DD_CONTAINER_EXCLUDE_LOGS
+    #   value: image:.*
+    # - name: DD_CONTAINER_INCLUDE_LOGS
+    #   value: image:cahillsf/ps-flask
+    - name: DD_DOCKER_ENV_AS_TAGS
+      value: '{"testing": "testing_key","PYTHON_VERSION": "python_v"}'
+    - name: testing
+      value: helloworld
+    - name: PYTHON_VERSION
+      value: t666
+  processAgent:
+    enabled: true
+    processCollection: true
+agents:
+  image:
+    # name: dd-agent
+    # tag: 7.37.2
+    # pullPolicy: Always
+    tag: 7-jmx

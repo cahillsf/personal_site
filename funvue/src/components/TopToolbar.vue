@@ -1,6 +1,6 @@
 <template>
     <div class="toolbarSticky" role="banner">
-        <div id="logo-name" v-on="onHomePage ? { click: () => navigateToPage('/') } : {}">
+        <div id="logo-name" v-on="onHomePage ? { click: () => this.$router.go() } : { click: () => navigateToPage('/') }">
           <img id="logo" src="@/assets/initials.png"/>
           <ul>
 							<li>Stephen Cahill</li>
@@ -13,11 +13,10 @@
           <vk-button size="small" class="menu-button" v-bind:class="{ 'selected':  page.selected }" type="primary" v-for="page in pages" v-bind:key="page.id" v-on="page.selected ? {} : { click: () => navigateToPage(page.path) }">
             {{ page.title }}
           </vk-button>
-          <vk-button size="small" class="menu-button" @click="showMeEnv">
-            Show Me Env
-          </vk-button>
+          <!-- <vk-button size="small" class="menu-button" @click="testEnv()">
+            TEST
+          </vk-button> -->
         </div>
-        <login-modal ref="childModal"></login-modal>
       
         <div id="icon-div" class="icon-animate-in" v-bind:class="{ 'icon-div-invisible': largeScreenOnLoad, 'icon-animate-out': iconAnimate}">
           <button id="hamburger" class="hamburger--vortex"  v-bind:class="{ 'is-active': activeBurger}" @click="showDropdown" ref="sandwichIcon" type="button">
@@ -28,7 +27,7 @@
           <vk-drop animation="slide-top-small" position="top-right" mode="click" ref="dropMenu">
             <vk-navbar-nav-dropdown-nav align="right" navbar-aligned="true" id="nav-dropdown">
               <!-- TO DO: add in routing once I have additional pages -->
-              <vk-nav-item v-for="page in pages" v-bind:key="page.id" :title="page.title" v-on="page.selected ? {} : { click: () => navigateToPage(page.path) }"></vk-nav-item>
+              <vk-nav-item id="nav-item" v-for="page in pages" v-bind:key="page.id" :title="page.title" v-on="page.selected ? {} : { click: () => navigateToPage(page.path) }"></vk-nav-item>
             </vk-navbar-nav-dropdown-nav>
           </vk-drop>
         </div>
@@ -37,18 +36,16 @@
 </template>
 
 <script>
+import { debounce } from "debounce";
 import '@vuikit/theme';
 import { Button, ButtonLink } from '../../node_modules/vuikit/lib/button';
 import { Icon, IconButton } from '../../node_modules/vuikit/lib/icon';
 import { IconMenu } from '@vuikit/icons';
 import { Drop } from '../../node_modules/vuikit/lib/drop';
 import { NavbarNavItem, NavbarNavDropdownNav } from '../../node_modules/vuikit/lib/navbar';
-import LoginModal from './LoginModal.vue';
-var counter = 0;
 export default {
   name: 'TopToolbar',
   components: {
-      LoginModal,
       VkButton: Button,
       VkButtonLink: ButtonLink,
       VkMenu: IconMenu,
@@ -95,26 +92,21 @@ export default {
   },
   mounted(){
 
-    if(window.innerWidth > 650){
+    if(window.innerWidth > 670){
       this.largeScreenOnLoad = true;
-      // console.log("large screen is " + this.largeScreenOnLoad)
       return;
     }
     this.smallScreenOnLoad = true;
 
   },
   created(){
-    window.addEventListener("resize", this.trackResize);
+    window.addEventListener("resize", debounce(this.triggerTrackResize, 200));
     this.setCurPageClass();
   },
   destroyed(){
     window.removeEventListener("resize", this.trackResize);
   },
   methods: {
-    showMeEnv(){
-      console.log(window.VUE_APP_DD_APP_ID);
-      console.log(window.VUE_APP_DD_CLIENT_TOKEN);
-    },
     setCurPageClass() {
       let pageKeys = Object.keys(this.pages);
       pageKeys.forEach(key => {
@@ -124,24 +116,21 @@ export default {
           curPage['selected'] = true;
         }
       })
+      this.onHomePage = (this.$router.currentRoute.path == '/')? true : false;
     },
     doSomething() {
       this.msg= 'TopToolbar!;'
     },
     showDropdown(){
-      counter += 1;
-      this.activeBurger = (counter % 2 != 0? true : false)
-      console.log("in show dropdown");
+      this.activeBurger = (this.dropDisplayed ? false : true)
       this.dropDisplayed = (this.dropDisplayed ? false : true);
     },
-    trackResize(){
-      if(window.innerWidth >= 650){
+    triggerTrackResize(){
+      if(window.innerWidth >= 670){
         if(this.dropDisplayed){
           this.$refs.sandwichIcon.click();
-          console.log("flipping display");
         }
         if(this.smallScreenOnLoad && this.firstTime){
-          console.log("buttonAnimate = true");
           this.smallScreenOnLoad = false;
           this.firstTime = false;
           this.buttonAnimate = true;
@@ -149,15 +138,15 @@ export default {
         }
       }
       else if(this.largeScreenOnLoad && this.firstTime){
-        console.log("in else if");
         this.largeScreenOnLoad = false;
         this.firstTime = false;
         this.iconAnimate = true;
         this.buttonAnimate = true;
       }
     },
-    goToCreateAccount(){
-      this.$router.push({ path: '/createaccount' });
+    testEnv() {
+      console.log(window.VUE_APP_DD_APP_ID);
+      console.log(window.VUE_APP_BUILD);
     }
   },
 };
@@ -165,6 +154,13 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.uk-navbar-dropdown-nav > li > a {
+  color: white;
+}
+
+.uk-navbar-dropdown-nav > li:hover > a {
+  color: black;
+}
 
 #hamburger {
   background-color: transparent;
@@ -282,7 +278,7 @@ export default {
 }
 
 .menu-button-invisible{
-  left: -100vw;
+  left: -700vw;
   position: relative;
   opacity: 0;
   width: 0;
@@ -290,7 +286,7 @@ export default {
 }
 
 
-@media only screen and (min-width: 650px){
+@media only screen and (min-width: 670px){
   .icon-animate-out{
     animation-duration: 1s; 
     animation-name: icon-animate-out;
@@ -304,7 +300,7 @@ export default {
   
 }
 
-@media only screen and (max-width: 650px){
+@media only screen and (max-width: 670px){
   .menu-button-out{
     animation-duration: 0.7s;
     animation-name: buttons-animate-out;
@@ -319,9 +315,9 @@ export default {
 
   #nav-dropdown{
     position: absolute;
-    background: rgb(225, 241, 225);
+    background: #6e9db3;
     right: 0px;
-    top: 60px;
+    top: 55px;
   }
 
 }

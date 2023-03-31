@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import HomePage from '@/pages/HomePage'
 import ToothPage from '@/pages/ToothPage'
-import CreateAccount from '@/components/CreateAccount'
 import ThreeScene from '@/pages/ThreeScene'
 import RileyProject from '@/pages/RileyProject'
 import RileyCanvas from '@/pages/RileyCanvas'
@@ -18,6 +17,8 @@ import ContactMe from '@/pages/ContactMe'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
+  hash: false,
   routes: [
     {
       path: '/',
@@ -28,11 +29,6 @@ export default new Router({
       path: '/toothpage',
       name: 'ToothPage',
       component: ToothPage
-    },
-    {
-      path: '/createaccount',
-      name: 'CreateAccount',
-      component: CreateAccount
     },
     {
       path: '/threescene',

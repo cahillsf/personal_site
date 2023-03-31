@@ -2,7 +2,7 @@ version: '3'
 services:
     # ddagent:
     #   image: datadog/agent:latest
-    #   container_name: datadog-agent-ft
+    #   container_name: datadog-agent-ps
     #   env_file:
     #     - ~/sandbox.docker.env
     #   environment:
@@ -10,7 +10,7 @@ services:
     #     - DD_LOGS_ENABLED=true
     #     - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
     #     - DD_APM_NON_LOCAL_TRAFFIC=true
-    #     - DD_AC_EXCLUDE=name:datadog-agent-ft
+    #     # - DD_AC_EXCLUDE=name:datadog-agent-ft
     #   volumes: 
     #     - /var/run/docker.sock:/var/run/docker.sock:ro
     #     - /proc/:/host/proc/:ro
@@ -18,39 +18,38 @@ services:
     #   ports:
     #     - "8126:8126"
     #   restart: on-failure
-    #   depends_on: 
-    #     - mysql_db
     mongodb:
-      image: mongo
-      environment:
-        MONGO_INITDB_ROOT_USERNAME: root
-        MONGO_INITDB_ROOT_PASSWORD: example
-      volumes:
-        - ./mongo-db/mongo-db-init-files:/docker-entrypoint-initdb.d
+      image: cahillsf/ps-mongo:test
+      # image: mongo
+      # environment:
+      #   MONGO_INITDB_ROOT_USERNAME: root
+      #   MONGO_INITDB_ROOT_PASSWORD: example
+      # volumes:
+      #   - ./mongo-db/mongo-db-init-files:/docker-entrypoint-initdb.d
     #   labels:
     #     com.datadoghq.ad.check_names: '["mysql"]'
     #     com.datadoghq.ad.init_configs: '[{}]'
     #     com.datadoghq.ad.instances: '[{"server": "%%host%%", "user": "datadog","pass": "tacosandburritos"}]'
       ports:
         - '27017:27017'
-    flask_server:
-      build:
-        dockerfile: Dockerfile
-        context: ./flask-server
-      # depends_on: 
-      #   - mysql_db
-      # environment: 
-      #   - DD_AGENT_HOST=datadog-agent-ft
-      ports:
-        - '8000:8000'
-    vue_web:
-      build:
-        dockerfile: Dockerfile
-        context: ./funvue
-      environment:
-        VUE_APP_DD_APP_ID: root
-        VUE_APP_DD_CLIENT_TOKEN: example
-      # env_file:
-      #   - ~/sandbox.docker.env
-      ports:
-        - '8080:80'
+    # flask_server:
+    #   image: cahillsf/ps-flask:test
+    #   # build:
+    #   #   dockerfile: Dockerfile
+    #   #   context: ./flask-server
+    #   # depends_on: 
+    #   #   - mysql_db
+    #   env_file:
+    #     - ~/sandbox.docker.env
+    #   ports:
+    #     - '8000:8000'
+    # vue_web:
+    #   image: cahillsf/ps-vue:test
+    #   # build:
+    #   #   dockerfile: Dockerfile
+    #     # dockerfile: Dockerfiledev
+    #     # context: ./funvue
+    #   env_file:
+    #     - ~/sandbox.docker.env
+    #   ports:
+    #     - '8080:8080'

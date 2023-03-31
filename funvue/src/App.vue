@@ -16,25 +16,35 @@ export default {
   created(){
     //TODO: reenable when site is live
 
-    // datadogRum.init({
-    //       applicationId: '5c19ff1f-62dc-467c-8294-f1d54c6583fc',
-    //       clientToken: 'pub953963662d5f76b93bb0370a71113128',
-    //       site: 'datadoghq.com',
-    //       service:'vue-app',
-    //       // Specify a version number to identify the deployed version of your application in Datadog 
-    //       version: '1.0.0',
-    //       sampleRate: 100,
-    //       trackInteractions: true,
-    //       allowedTracingOrigins:["http://localhost:8000"]
-    //     });
+    datadogRum.init({
+          applicationId: window.VUE_APP_DD_APP_ID,
+          clientToken: window.VUE_APP_DD_CLIENT_TOKEN,
+          site: 'datadoghq.com',
+          service:'vue-app',
+          env: 'dev',
+          // Specify a version number to identify the deployed version of your application in Datadog 
+          version: '1.0.0',
+          sampleRate: 100,
+          premiumSampleRate: 100,
+          trackInteractions: true,
+          allowedTracingOrigins:["http://localhost:8000", /https:\/\/.*\.stephencahill\.net/]
+        });
   }
 }
 </script>
 
 <style>
 @import '../node_modules/aos/dist/aos.css';
+@font-face {
+  font-family: "Playfair";
+  src: url(assets/fonts/PlayfairDisplay-Regular.ttf) format ("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  /* font-family: 'Avenir', Helvetica, Arial, sans-serif; */
+  font-family: "Playfair", Times, serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -66,5 +76,9 @@ canvas {
 p {
   text-align: left;
   margin: 3%;
+}
+
+div.grecaptcha-badge { 
+  visibility: hidden; 
 }
 </style>

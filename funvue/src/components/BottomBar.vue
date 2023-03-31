@@ -1,7 +1,7 @@
 <template>
     <div id="footer-div">
         <footer>
-            <h5>Copyright &#169; Stephen Cahill 2021</h5>
+            <h5>Copyright &#169; Stephen Cahill 2022</h5>
         </footer>
         <table id="icons">
             <td><a href="https://github.com/cahillsf" target="_blank"><img src="@/assets/ghIcon.png"/></a></td>

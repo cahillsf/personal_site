@@ -1,0 +1,23 @@
+apiServer:
+  timeoutForControlPlane: 4m0s
+  extraArgs:
+    cloud-provider: aws
+apiVersion: kubeadm.k8s.io/v1beta3
+certificatesDir: /etc/kubernetes/pki
+clusterName: personal_site
+controllerManager:
+  extraArgs:
+    cloud-provider: aws
+    bind-address: 0.0.0.0
+etcd:
+  local:
+    dataDir: /var/lib/etcd
+imageRepository: k8s.gcr.io
+kind: ClusterConfiguration
+kubernetesVersion: 1.23.0
+networking:
+  dnsDomain: cluster.local
+  serviceSubnet: 10.96.0.0/12
+scheduler:
+  extraArgs:
+    bind-address: 0.0.0.0
