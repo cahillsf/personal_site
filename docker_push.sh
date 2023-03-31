@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "Hello world"
 
-while getopts r:t:i:p: flag
+while getopts r:t:i:p:d: flag
 do
     case "${flag}" in
         r) repo=${OPTARG};;
