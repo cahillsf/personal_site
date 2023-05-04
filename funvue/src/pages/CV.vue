@@ -2,7 +2,7 @@
  <div class="singleColGridCv">
     <top-toolbar></top-toolbar>
     <div id="pdfMain">
-        <div id="pageSwitchWrapper">
+        <!-- <div id="pageSwitchWrapper">
             <div id="selectionWrapper">
                 <button :disabled="page <= 1" @click="page--">❮</button>
 
@@ -10,7 +10,7 @@
 
                 <button :disabled="page >= pageCount" @click="page++">❯</button>
             </div>
-        </div>
+        </div> -->
         <div id="pdfWrapper">
                 <vue-pdf-embed class="pdfCanvas" ref="pdfRef" :source="source1" :page="page" />
             </div>
@@ -35,7 +35,7 @@ export default {
   data () {
     return {
       page: 1,
-      pageCount: 2,
+      // pageCount: 2,
       source1: 'static/cahillsf_cv_f.pdf',
     //   source1: 'https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/examples/learning/helloworld.pdf',
       msg: 'Welcome to Your Vue.js App',
